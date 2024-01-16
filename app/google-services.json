@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "152348774581",
+    "project_id": "outfit-maker-fake",
+    "storage_bucket": "outfit-maker-fake.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:152348774581:android:67d14949c2c3e546166efc",
+        "android_client_info": {
+          "package_name": "com.example.outfitmakerfake"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB03rmo0kG_UyOhXnewUKtRzVrD5a1wkoQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -20,6 +20,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import ApplicationLogic.LoginController;
+import ApplicationLogic.RegistrazioneController;
+import Storage.LoginService;
+import Storage.RegistrazioneService;
 import Storage.UtenteDAO;
 
 public class Login extends AppCompatActivity {
@@ -29,7 +33,20 @@ public class Login extends AppCompatActivity {
     String email;
     String password;
     ProgressBar progressBar;
-    UtenteDAO utenteDAO;
+    private LoginController loginController;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.login);
+
+        mAuth = FirebaseAuth.getInstance();
+        emailET = findViewById(R.id.editTextEmailLogin);
+        passwordET = findViewById(R.id.editTextPasswordLogin);
+        progressBar = findViewById(R.id.progressBarL);
+
+        loginController = new LoginController(new LoginService(new UtenteDAO()));
+    }
 
     @Override
     public void onStart() {
@@ -45,20 +62,7 @@ public class Login extends AppCompatActivity {
         Log.d("LOGIN", "esco dall'if di onStart");
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
-
-        mAuth = FirebaseAuth.getInstance();
-        emailET = findViewById(R.id.editTextEmailLogin);
-        passwordET = findViewById(R.id.editTextPasswordLogin);
-        progressBar = findViewById(R.id.progressBarL);
-
-        utenteDAO = new UtenteDAO(mAuth, FirebaseFirestore.getInstance());
-    }
-
-    public void effettuaLogin(View v){
+    public void inserisciDatiLog(View v){
         progressBar.setVisibility(View.VISIBLE);
         email = emailET.getText().toString();
         password = passwordET.getText().toString();
@@ -78,7 +82,7 @@ public class Login extends AppCompatActivity {
             return;
         }
 
-        utenteDAO.effettuaLogin(email, password)
+        loginController.effettuaLogin(email, password)
                 .addOnCompleteListener(new OnCompleteListener<Boolean>() {
                     @Override
                     public void onComplete(@NonNull Task<Boolean> task) {
@@ -86,12 +90,13 @@ public class Login extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Login avvenuto con successo", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(getApplicationContext(), Home.class);
                             startActivity(i);
+                            finish();
                         } else {
                             Toast.makeText(getApplicationContext(), "Errore durante il login", Toast.LENGTH_SHORT).show();
                         }
                         progressBar.setVisibility(View.INVISIBLE);
                     }
-                });
+                });;
     }
 
     public void vaiRegistrazione(View v){

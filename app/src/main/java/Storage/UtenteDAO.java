@@ -18,6 +18,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.HashMap;
 import java.util.Map;
 
+import ApplicationLogic.Utente;
+
 public class UtenteDAO {
 
     public Utente utente;

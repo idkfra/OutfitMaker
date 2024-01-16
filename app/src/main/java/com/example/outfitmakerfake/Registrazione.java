@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -26,6 +25,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.HashMap;
 import java.util.Map;
 
+import ApplicationLogic.RegistrazioneController;
+import Storage.RegistrazioneService;
 import Storage.UtenteDAO;
 
 public class Registrazione extends AppCompatActivity {
@@ -44,6 +45,10 @@ public class Registrazione extends AppCompatActivity {
     String telefono;
     FirebaseFirestore db;
     FirebaseAuth mAuth;
+
+    private RegistrazioneController registrazioneController;
+
+
 
     @Override
     public void onStart() {
@@ -70,6 +75,8 @@ public class Registrazione extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
+
+        registrazioneController = new RegistrazioneController(new RegistrazioneService(new UtenteDAO()));
     }
 
     public void inserisciDati(View v){
@@ -93,12 +100,12 @@ public class Registrazione extends AppCompatActivity {
             return;
         }
 
-        /*if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Toast.makeText(getApplicationContext(), "Formato email non valido", Toast.LENGTH_SHORT).show();
             return;
-        }*/
+        }
 
-        if (password.length() < 6 || !password.matches(".*\\d.*") || !password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*")) {
+        if (password.length() < 8 || !password.matches(".*\\d.*") || !password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*")) {
             Toast.makeText(getApplicationContext(), "La password deve avere almeno 6 caratteri, un numero e un simbolo", Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.INVISIBLE);
             return;
@@ -110,37 +117,24 @@ public class Registrazione extends AppCompatActivity {
             return;
         }
 
-        UtenteDAO utenteDAO = new UtenteDAO();
-        /*if(utenteDAO.creaUtente(nome, cognome, email, password, telefono)){
-            Toast.makeText(getApplicationContext(), "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(getApplicationContext(), Home.class);
-            startActivity(i);
-        }*/
-
-        /*if(!utenteDAO.creaUtente(nome, cognome, email, password, telefono)){
-            Toast.makeText(getApplicationContext(), "Errore nella registrazione", Toast.LENGTH_SHORT).show();
-            return;
-        } else {
-            Toast.makeText(getApplicationContext(), "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(getApplicationContext(), Home.class);
-            startActivity(i);
-        }*/
-
-        utenteDAO.creaUtente(nome, cognome, email, password, telefono)
+        registrazioneController.creaUtente(nome, cognome, email, password, telefono)
                 .addOnCompleteListener(new OnCompleteListener<Boolean>() {
                     @Override
                     public void onComplete(@NonNull Task<Boolean> task) {
-                        Log.d("REGISTRAZIONE", "Entra in onComplete");
-                        if (task.isSuccessful() && task.getResult()) {
-                            Log.d("REGISTRAZIONE", "task isSuccessful");
-                            // Registrazione avvenuta con successo
-                            Toast.makeText(getApplicationContext(), "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(getApplicationContext(), Home.class);
-                            startActivity(i);
+                        if (task.isSuccessful()) {
+                            boolean registrazioneSuccesso = task.getResult();
+
+                            if (registrazioneSuccesso) {
+                                Toast.makeText(getApplicationContext(), "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(getApplicationContext(), Home.class);
+                                startActivity(i);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Errore nella registrazione", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
-                            Log.d("REGISTRAZIONE", "Tast NOT Succesfull");
-                            // Errore nella registrazione
-                            Toast.makeText(getApplicationContext(), "Errore nella registrazione", Toast.LENGTH_SHORT).show();
+                            // Gestione dell'errore nella registrazione
+                            Exception exception = task.getException();
+                            Toast.makeText(getApplicationContext(), "Errore: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                         progressBar.setVisibility(View.INVISIBLE);
                     }

@@ -5,6 +5,8 @@ import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -37,7 +39,11 @@ public class AreaUtente extends AppCompatActivity {
         cognomeTV = findViewById(R.id.cognomeAU);
         emailTV = findViewById(R.id.emailAU);
         telefonoTV = findViewById(R.id.telefonoAU);
+    }
 
+    @Override
+    public void onStart(){
+        super.onStart();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (currentUser != null) {
@@ -48,12 +54,6 @@ public class AreaUtente extends AppCompatActivity {
             ottieniDatiUtente();
         }
     }
-
-    /*@Override
-    public void onStart(){
-        super.onStart();
-        ottieniDatiUtente();
-    }*/
 
     public void ottieniDatiUtente(){
         Log.d("AREAUTENTELOG", "Entra in ottieniDatiUtente");
@@ -103,5 +103,34 @@ public class AreaUtente extends AppCompatActivity {
         Intent i = new Intent(getApplicationContext(), Login.class);
         startActivity(i);
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+
+        if(id == R.id.menu1){
+            Intent i = new Intent(getApplicationContext(), Home.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(i);
+            return true;
+        } else if(id == R.id.menu2){
+            Intent i = new Intent(getApplicationContext(), AreaUtente.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(i);
+            return true;
+        } else if(id == R.id.menu3){
+            setContentView(R.layout.assistenza);
+            return true;
+        } else if(id == R.id.menu4){
+            setContentView(R.layout.istruzioni);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

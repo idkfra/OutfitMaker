@@ -1,7 +1,5 @@
 package com.example.outfitmakerfake;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.outfitmakerfake.Entity.Utente;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +20,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+
+import Storage.UtenteDAO;
 
 public class AreaUtente extends AppCompatActivity {
 
@@ -101,6 +102,7 @@ public class AreaUtente extends AppCompatActivity {
     public void disconnessioneClicked(View v){
         FirebaseAuth.getInstance().signOut();
         Intent i = new Intent(getApplicationContext(), Login.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(i);
         finish();
     }

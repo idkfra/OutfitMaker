@@ -13,17 +13,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import ApplicationLogic.LoginController;
-import ApplicationLogic.RegistrazioneController;
 import Storage.LoginService;
-import Storage.RegistrazioneService;
 import Storage.UtenteDAO;
 
 public class Login extends AppCompatActivity {
@@ -33,7 +28,7 @@ public class Login extends AppCompatActivity {
     String email;
     String password;
     ProgressBar progressBar;
-    private LoginController loginController;
+    private LoginService loginService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +40,7 @@ public class Login extends AppCompatActivity {
         passwordET = findViewById(R.id.editTextPasswordLogin);
         progressBar = findViewById(R.id.progressBarL);
 
-        loginController = new LoginController(new LoginService(new UtenteDAO()));
+        loginService = new LoginService(new UtenteDAO());
     }
 
     @Override
@@ -69,20 +64,23 @@ public class Login extends AppCompatActivity {
 
         if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)){
             Toast.makeText(getApplicationContext(), "Compila tutti i campi", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.INVISIBLE);
             return;
         }
 
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(getApplicationContext(), "Formato email non valido", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Email non valida", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.INVISIBLE);
             return;
         }
 
         if (password.length() < 6 || !password.matches(".*\\d.*") || !password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*")) {
-            Toast.makeText(getApplicationContext(), "La password deve avere almeno 6 caratteri, un numero e un simbolo", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Password errata", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.INVISIBLE);
             return;
         }
 
-        loginController.effettuaLogin(email, password)
+        loginService.effettuaLogin(email, password)
                 .addOnCompleteListener(new OnCompleteListener<Boolean>() {
                     @Override
                     public void onComplete(@NonNull Task<Boolean> task) {
@@ -93,10 +91,12 @@ public class Login extends AppCompatActivity {
                             finish();
                         } else {
                             Toast.makeText(getApplicationContext(), "Errore durante il login", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.INVISIBLE);
+                            return;
                         }
-                        progressBar.setVisibility(View.INVISIBLE);
                     }
-                });;
+                });
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     public void vaiRegistrazione(View v){

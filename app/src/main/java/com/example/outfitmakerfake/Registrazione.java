@@ -10,24 +10,14 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import ApplicationLogic.RegistrazioneController;
 import Storage.RegistrazioneService;
 import Storage.UtenteDAO;
+import Utility.NetworkUtil;
 
 public class Registrazione extends AppCompatActivity {
 
@@ -38,6 +28,7 @@ public class Registrazione extends AppCompatActivity {
     EditText telefonoET;
     ProgressBar progressBar;
 
+    String uid;
     String nome;
     String cognome;
     String email;
@@ -46,9 +37,11 @@ public class Registrazione extends AppCompatActivity {
     FirebaseFirestore db;
     FirebaseAuth mAuth;
 
-    private RegistrazioneController registrazioneController;
+    private RegistrazioneService registrazioneService;
 
+    public Registrazione() {
 
+    }
 
     @Override
     public void onStart() {
@@ -76,11 +69,17 @@ public class Registrazione extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        registrazioneController = new RegistrazioneController(new RegistrazioneService(new UtenteDAO()));
+        registrazioneService = new RegistrazioneService(new UtenteDAO());
     }
 
     public void inserisciDati(View v){
         Log.d("UTENTE", "Entra in  inserisciDati");
+
+        if (!NetworkUtil.isNetworkAvailable(getApplicationContext())) {
+            Toast.makeText(getApplicationContext(), "Connessione Internet assente", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         progressBar.setVisibility(View.VISIBLE);
         nome = nomeET.getText().toString();
         cognome = cognomeET.getText().toString();
@@ -117,7 +116,7 @@ public class Registrazione extends AppCompatActivity {
             return;
         }
 
-        registrazioneController.creaUtente(nome, cognome, email, password, telefono)
+        /*registrazioneController.creaUtente(nome, cognome, email, password, telefono)
                 .addOnCompleteListener(new OnCompleteListener<Boolean>() {
                     @Override
                     public void onComplete(@NonNull Task<Boolean> task) {
@@ -138,7 +137,18 @@ public class Registrazione extends AppCompatActivity {
                         }
                         progressBar.setVisibility(View.INVISIBLE);
                     }
-                });
+                });*/
+
+        if(registrazioneService.creaUtente(nome, cognome, email, password, telefono) == Tasks.forResult(true)){
+            Toast.makeText(getApplicationContext(), "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(getApplicationContext(), Home.class);
+            startActivity(i);
+            finish();
+        } else {
+            Toast.makeText(getApplicationContext(), "Registrazione fallita", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     public void vaiLogin(View v){

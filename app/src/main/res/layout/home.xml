@@ -32,7 +32,8 @@
         <Button
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="Armadio"/>
+            android:text="Armadio"
+            android:onClick="armadioClicked"/>
 
         <Button
             android:layout_width="300dp"

@@ -2,6 +2,7 @@ package Storage;
 
 import android.util.Log;
 
+import com.example.outfitmakerfake.Entity.Utente;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -18,13 +19,11 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.HashMap;
 import java.util.Map;
 
-import ApplicationLogic.Utente;
-
 public class UtenteDAO {
 
-    public Utente utente;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public Utente utente;
 
     public UtenteDAO() {
     }
@@ -49,7 +48,8 @@ public class UtenteDAO {
                             if (currentUser != null) {
                                 String uid = currentUser.getUid();
                                 Log.d("UTENTE", "UID in creaUtenteFirestore: " + uid);
-                                creaUtenteFirestore(nome, cognome, email, password, telefono, uid);
+                                creaUtenteFirestore(uid, nome, cognome, email, password, telefono);
+                                utente = new Utente(uid, nome, cognome, email, password, telefono);
                                 taskCompletionSource.setResult(true);
                             } else {
                                 Log.d("UTENTE", "Errore: currentUser è null");
@@ -67,7 +67,7 @@ public class UtenteDAO {
         return taskCompletionSource.getTask();
     }
 
-    public void creaUtenteFirestore(String nome, String cognome, String email, String password, String telefono, String uid) {
+    public void creaUtenteFirestore(String uid, String nome, String cognome, String email, String password, String telefono) {
         Log.d("UTENTE", "Entra in creaUtenteFirestore");
         Map<String, Object> utente = new HashMap<>();
         utente.put("uid", uid);
@@ -111,4 +111,8 @@ public class UtenteDAO {
 
         return taskCompletionSource.getTask();
     }
+
+    /*public void getUtente(Utente utente){
+        this.utente = utente;
+    }*/
 }

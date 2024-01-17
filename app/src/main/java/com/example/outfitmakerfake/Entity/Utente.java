@@ -1,7 +1,8 @@
-package ApplicationLogic;
+package com.example.outfitmakerfake.Entity;
 
 public class Utente {
 
+    private String id;
     private String nome;
     private String cognome;
     private String email;
@@ -11,12 +12,21 @@ public class Utente {
     public Utente() {
     }
 
-    public Utente(String nome, String cognome, String email, String password, String telefono) {
+    public Utente(String id, String nome, String cognome, String email, String password, String telefono) {
+        this.id = id;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.password = password;
         this.telefono = telefono;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNome() {

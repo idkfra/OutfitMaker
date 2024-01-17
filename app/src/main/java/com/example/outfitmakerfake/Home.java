@@ -28,12 +28,17 @@ public class Home extends AppCompatActivity {
         nome_cognome = findViewById(R.id.nome_cognome);
 
         if(user == null){
-            Intent i = new Intent(getApplicationContext(), Login.class);
+            Intent i = new Intent(getApplicationContext(), LoginController.class);
             startActivity(i);
             finish();
         } else {
             nome_cognome.setText(user.getEmail());
         }
+    }
+
+    public void armadioClicked(View v){
+        Intent i = new Intent(getApplicationContext(), ArmadioController.class);
+        startActivity(i);
     }
 
     @Override
@@ -50,7 +55,7 @@ public class Home extends AppCompatActivity {
             setContentView(R.layout.home);
             return true;
         } else if(id == R.id.menu2){
-            Intent i = new Intent(getApplicationContext(), AreaUtente.class);
+            Intent i = new Intent(getApplicationContext(), AreaUtenteController.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(i);
             return true;

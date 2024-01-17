@@ -16,8 +16,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class UtenteDAO {
 
@@ -47,9 +50,12 @@ public class UtenteDAO {
                             FirebaseUser currentUser = mAuth.getCurrentUser();
                             if (currentUser != null) {
                                 String uid = currentUser.getUid();
+
+                                String idArmadio = generateUniqueArmadioId();
+
                                 Log.d("UTENTE", "UID in creaUtenteFirestore: " + uid);
-                                creaUtenteFirestore(uid, nome, cognome, email, password, telefono);
-                                utente = new Utente(uid, nome, cognome, email, password, telefono);
+                                creaUtenteFirestore(uid, nome, cognome, email, password, telefono, idArmadio);
+                                utente = new Utente(uid, nome, cognome, email, password, telefono, idArmadio);
                                 taskCompletionSource.setResult(true);
                             } else {
                                 Log.d("UTENTE", "Errore: currentUser è null");
@@ -67,7 +73,7 @@ public class UtenteDAO {
         return taskCompletionSource.getTask();
     }
 
-    public void creaUtenteFirestore(String uid, String nome, String cognome, String email, String password, String telefono) {
+    public void creaUtenteFirestore(String uid, String nome, String cognome, String email, String password, String telefono, String idArmadio) {
         Log.d("UTENTE", "Entra in creaUtenteFirestore");
         Map<String, Object> utente = new HashMap<>();
         utente.put("uid", uid);
@@ -76,6 +82,7 @@ public class UtenteDAO {
         utente.put("email", email);
         utente.put("password", password);
         utente.put("telefono", telefono);
+        utente.put("idArmadio", idArmadio);  // Aggiorna con il nuovo campo
         Log.d("UTENTE", "Legge i dati");
 
         db.collection("utenti")
@@ -83,7 +90,8 @@ public class UtenteDAO {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Log.d("UTENTE", "DocumentSnapshot aggiunto con ID: " + documentReference.getId());
+                        Log.d("UTENTE", "Armadio creato con ID: " + documentReference.getId());
+                        creaArmadioFirestore(idArmadio);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -112,7 +120,29 @@ public class UtenteDAO {
         return taskCompletionSource.getTask();
     }
 
-    /*public void getUtente(Utente utente){
-        this.utente = utente;
-    }*/
+    private String generateUniqueArmadioId() {
+        return UUID.randomUUID().toString();
+    }
+
+    private void creaArmadioFirestore(String idArmadio) {
+        Map<String, Object> armadio = new HashMap<>();
+        armadio.put("idArmadio", idArmadio);
+        armadio.put("listaCapi", new ArrayList<>()); // Inizializza la lista dei capi come vuota
+
+        db.collection("armadi")
+                .document(idArmadio)
+                .set(armadio)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("ARMADIO", "Documento Armadio aggiunto con successo");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("ARMADIO", "Errore durante l'aggiunta del documento Armadio + (" + e + ")");
+                    }
+                });
+    }
 }

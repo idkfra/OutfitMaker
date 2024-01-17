@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/yellow"
-    tools:context=".Registrazione"
+    tools:context=".RegistrazioneController"
     android:gravity="center">
 
     <TextView

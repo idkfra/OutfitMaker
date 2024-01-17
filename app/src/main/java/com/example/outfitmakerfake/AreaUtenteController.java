@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.outfitmakerfake.Entity.Utente;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,9 +20,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import Storage.UtenteDAO;
-
-public class AreaUtente extends AppCompatActivity {
+public class AreaUtenteController extends AppCompatActivity {
 
     public String nome, cognome, email, telefono;
     TextView nomeTV, cognomeTV, emailTV, telefonoTV;
@@ -101,7 +98,7 @@ public class AreaUtente extends AppCompatActivity {
 
     public void disconnessioneClicked(View v){
         FirebaseAuth.getInstance().signOut();
-        Intent i = new Intent(getApplicationContext(), Login.class);
+        Intent i = new Intent(getApplicationContext(), LoginController.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(i);
         finish();
@@ -123,7 +120,7 @@ public class AreaUtente extends AppCompatActivity {
             startActivity(i);
             return true;
         } else if(id == R.id.menu2){
-            Intent i = new Intent(getApplicationContext(), AreaUtente.class);
+            Intent i = new Intent(getApplicationContext(), AreaUtenteController.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(i);
             return true;

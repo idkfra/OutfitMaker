@@ -21,7 +21,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import Storage.LoginService;
 import Storage.UtenteDAO;
 
-public class Login extends AppCompatActivity {
+public class LoginController extends AppCompatActivity {
     FirebaseAuth mAuth;
     EditText emailET;
     EditText passwordET;
@@ -100,7 +100,7 @@ public class Login extends AppCompatActivity {
     }
 
     public void vaiRegistrazione(View v){
-        Intent i = new Intent(getApplicationContext(), Registrazione.class);
+        Intent i = new Intent(getApplicationContext(), RegistrazioneController.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(i);
     }

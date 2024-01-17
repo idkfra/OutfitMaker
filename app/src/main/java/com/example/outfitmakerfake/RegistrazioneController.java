@@ -10,7 +10,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.Tasks;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -19,7 +20,7 @@ import Storage.RegistrazioneService;
 import Storage.UtenteDAO;
 import Utility.NetworkUtil;
 
-public class Registrazione extends AppCompatActivity {
+public class RegistrazioneController extends AppCompatActivity {
 
     EditText nomeET;
     EditText cognomeET;
@@ -39,15 +40,11 @@ public class Registrazione extends AppCompatActivity {
 
     private RegistrazioneService registrazioneService;
 
-    public Registrazione() {
-
-    }
-
     @Override
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        if (currentUser != null) {
             Intent i = new Intent(getApplicationContext(), Home.class);
             startActivity(i);
             finish();
@@ -72,8 +69,8 @@ public class Registrazione extends AppCompatActivity {
         registrazioneService = new RegistrazioneService(new UtenteDAO());
     }
 
-    public void inserisciDati(View v){
-        Log.d("UTENTE", "Entra in  inserisciDati");
+    public void inserisciDati(View v) {
+        Log.d("UTENTE", "Entra in inserisciDati");
 
         if (!NetworkUtil.isNetworkAvailable(getApplicationContext())) {
             Toast.makeText(getApplicationContext(), "Connessione Internet assente", Toast.LENGTH_SHORT).show();
@@ -116,10 +113,10 @@ public class Registrazione extends AppCompatActivity {
             return;
         }
 
-        /*registrazioneController.creaUtente(nome, cognome, email, password, telefono)
+        registrazioneService.creaUtente(nome, cognome, email, password, telefono)
                 .addOnCompleteListener(new OnCompleteListener<Boolean>() {
                     @Override
-                    public void onComplete(@NonNull Task<Boolean> task) {
+                    public void onComplete(Task<Boolean> task) {
                         if (task.isSuccessful()) {
                             boolean registrazioneSuccesso = task.getResult();
 
@@ -127,6 +124,7 @@ public class Registrazione extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(getApplicationContext(), Home.class);
                                 startActivity(i);
+                                finish();
                             } else {
                                 Toast.makeText(getApplicationContext(), "Errore nella registrazione", Toast.LENGTH_SHORT).show();
                             }
@@ -137,22 +135,11 @@ public class Registrazione extends AppCompatActivity {
                         }
                         progressBar.setVisibility(View.INVISIBLE);
                     }
-                });*/
-
-        if(registrazioneService.creaUtente(nome, cognome, email, password, telefono) == Tasks.forResult(true)){
-            Toast.makeText(getApplicationContext(), "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(getApplicationContext(), Home.class);
-            startActivity(i);
-            finish();
-        } else {
-            Toast.makeText(getApplicationContext(), "Registrazione fallita", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        progressBar.setVisibility(View.INVISIBLE);
+                });
     }
 
-    public void vaiLogin(View v){
-        Intent i = new Intent(getApplicationContext(), Login.class);
+    public void vaiLogin(View v) {
+        Intent i = new Intent(getApplicationContext(), LoginController.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(i);
     }

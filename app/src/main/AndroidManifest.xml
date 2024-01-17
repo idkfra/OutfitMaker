@@ -15,16 +15,17 @@
         android:theme="@style/Theme.OutfitMakerFake"
         tools:targetApi="31">
         <activity
-            android:name=".Login"
+            android:name=".LoginController"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Registrazione" />
+        <activity android:name=".RegistrazioneController" />
         <activity android:name=".Home" />
-        <activity android:name=".AreaUtente"/>
+        <activity android:name=".AreaUtenteController"/>
+        <activity android:name=".ArmadioController"/>
     </application>
 
 </manifest>

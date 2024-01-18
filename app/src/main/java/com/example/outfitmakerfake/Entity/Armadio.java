@@ -1,5 +1,6 @@
 package com.example.outfitmakerfake.Entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Armadio {
@@ -12,6 +13,13 @@ public class Armadio {
         this.listaCapi = listaCapi;
     }
 
+
+    public void aggiungiCapo(Capo capo){
+        if(listaCapi.isEmpty()){
+            listaCapi=new ArrayList<>();
+        }
+        listaCapi.add(capo);
+    }
     public void setListaCapi(List<Capo> listaCapi) {
         this.listaCapi = listaCapi;
     }

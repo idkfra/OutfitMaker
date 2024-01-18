@@ -27,9 +27,10 @@ public class UtenteDAO {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     public Utente utente;
-
+    public ArmadioDAO armadioDAO = new ArmadioDAO(mAuth, db);
     public UtenteDAO() {
     }
+
 
     public UtenteDAO(FirebaseAuth mAuth, FirebaseFirestore db) {
         this.mAuth = mAuth;
@@ -51,7 +52,7 @@ public class UtenteDAO {
                             if (currentUser != null) {
                                 String uid = currentUser.getUid();
 
-                                String idArmadio = generateUniqueArmadioId();
+                                String idArmadio = armadioDAO.generateUniqueArmadioId();
 
                                 Log.d("UTENTE", "UID in creaUtenteFirestore: " + uid);
                                 creaUtenteFirestore(uid, nome, cognome, email, password, telefono, idArmadio);
@@ -74,6 +75,7 @@ public class UtenteDAO {
     }
 
     public void creaUtenteFirestore(String uid, String nome, String cognome, String email, String password, String telefono, String idArmadio) {
+        //armadioDAO=new ArmadioDAO();
         Log.d("UTENTE", "Entra in creaUtenteFirestore");
         Map<String, Object> utente = new HashMap<>();
         utente.put("uid", uid);
@@ -91,7 +93,7 @@ public class UtenteDAO {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d("UTENTE", "Armadio creato con ID: " + documentReference.getId());
-                        creaArmadioFirestore(idArmadio);
+                        armadioDAO.creaArmadioFirestore(idArmadio);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -120,29 +122,5 @@ public class UtenteDAO {
         return taskCompletionSource.getTask();
     }
 
-    private String generateUniqueArmadioId() {
-        return UUID.randomUUID().toString();
-    }
 
-    private void creaArmadioFirestore(String idArmadio) {
-        Map<String, Object> armadio = new HashMap<>();
-        armadio.put("idArmadio", idArmadio);
-        armadio.put("listaCapi", new ArrayList<>()); // Inizializza la lista dei capi come vuota
-
-        db.collection("armadi")
-                .document(idArmadio)
-                .set(armadio)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("ARMADIO", "Documento Armadio aggiunto con successo");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("ARMADIO", "Errore durante l'aggiunta del documento Armadio + (" + e + ")");
-                    }
-                });
-    }
 }

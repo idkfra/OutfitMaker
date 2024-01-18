@@ -4,7 +4,7 @@ import android.graphics.drawable.Drawable;
 
 public class Capo {
     private String id_indumento;
-    private String nome;
+    private String nome_brand;
     private String colore;
     private String tipologia;
     private String stagionalita;
@@ -14,17 +14,17 @@ public class Capo {
     public Capo() {
     }
 
-    public Capo(String id_indumento, String nome, String colore, String tipologia, String stagionalita){
+    public Capo(String id_indumento, String nome_brand, String colore, String tipologia, String stagionalita){
         this.id_indumento=id_indumento;
-        this.nome=nome;
+        this.nome_brand=nome_brand;
         this.colore=colore;
         this.tipologia=tipologia;
         this.stagionalita=stagionalita;
     }
 
-    public Capo(String id_indumento, String nome, String colore, String tipologia, String stagionalita, Drawable immagine) {
+    public Capo(String id_indumento, String nome_brand, String colore, String tipologia, String stagionalita, Drawable immagine) {
         this.id_indumento = id_indumento;
-        this.nome = nome;
+        this.nome_brand = nome_brand;
         this.colore = colore;
         this.tipologia = tipologia;
         this.stagionalita = stagionalita;
@@ -39,12 +39,12 @@ public class Capo {
         this.id_indumento = id_indumento;
     }
 
-    public String getNome() {
-        return nome;
+    public String getnome_brand() {
+        return nome_brand;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setnome_brand(String nome_brand) {
+        this.nome_brand = nome_brand;
     }
 
     public String getColore() {

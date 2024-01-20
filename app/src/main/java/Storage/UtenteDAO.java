@@ -27,6 +27,7 @@ public class UtenteDAO {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     public Utente utente;
+    String idArmadio;
     public ArmadioDAO armadioDAO = new ArmadioDAO(mAuth, db);
     public UtenteDAO() {
     }
@@ -52,7 +53,7 @@ public class UtenteDAO {
                             if (currentUser != null) {
                                 String uid = currentUser.getUid();
 
-                                String idArmadio = armadioDAO.generateUniqueArmadioId();
+                                idArmadio = armadioDAO.generateUniqueArmadioId();
 
                                 Log.d("UTENTE", "UID in creaUtenteFirestore: " + uid);
                                 creaUtenteFirestore(uid, nome, cognome, email, password, telefono, idArmadio);
@@ -75,6 +76,7 @@ public class UtenteDAO {
     }
 
     public void creaUtenteFirestore(String uid, String nome, String cognome, String email, String password, String telefono, String idArmadio) {
+
         //armadioDAO=new ArmadioDAO();
         Log.d("UTENTE", "Entra in creaUtenteFirestore");
         Map<String, Object> utente = new HashMap<>();
@@ -122,5 +124,8 @@ public class UtenteDAO {
         return taskCompletionSource.getTask();
     }
 
+    public String getIdArmadio(){
+        return this.idArmadio;
+    }
 
 }

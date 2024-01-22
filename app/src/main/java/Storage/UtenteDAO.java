@@ -87,7 +87,6 @@ public class UtenteDAO {
         utente.put("password", password);
         utente.put("telefono", telefono);
         utente.put("idArmadio", idArmadio);  // Aggiorna con il nuovo campo
-        Log.d("UTENTE", "Legge i dati");
 
         db.collection("utenti")
                 .add(utente)
@@ -124,8 +123,11 @@ public class UtenteDAO {
         return taskCompletionSource.getTask();
     }
 
-    public String getIdArmadio(){
-        return this.idArmadio;
+    public String getIdArmadioUtente() {
+        if (utente != null) {
+            return utente.getIdArmadio();
+        }
+        return null; // o gestisci questo caso in modo appropriato per il tuo scenario
     }
 
 }

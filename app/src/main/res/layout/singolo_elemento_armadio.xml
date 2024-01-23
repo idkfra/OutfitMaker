@@ -7,6 +7,12 @@
     app:cardCornerRadius="8dp"
     android:layout_margin="16dp">
 
+    <FrameLayout
+        android:id="@+id/contenitore_frammento_modifica_capo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -150,9 +156,14 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"/>
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btn_modifica_capo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/modifica"
+            android:layout_gravity="end"
+            android:layout_marginEnd="10dp"
+            android:onClick="inserisciFrammentoModificaCapo"/>
     </LinearLayout>
-
-
-
-
 </androidx.cardview.widget.CardView>

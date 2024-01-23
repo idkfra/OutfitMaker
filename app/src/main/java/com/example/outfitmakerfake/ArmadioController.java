@@ -1,11 +1,9 @@
 package com.example.outfitmakerfake;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -20,7 +18,6 @@ import com.example.outfitmakerfake.Entity.Capo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -29,8 +26,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-import Utility.FragmentInserisciCapo;
-import Utility.MyAdapter;
+import com.example.outfitmakerfake.Utility.FragmentInserisciCapo;
+import com.example.outfitmakerfake.Utility.MyAdapter;
 
 public class ArmadioController extends AppCompatActivity {
     FragmentManager fm;
@@ -98,6 +95,7 @@ public class ArmadioController extends AppCompatActivity {
         FragmentInserisciCapo ic = new FragmentInserisciCapo();
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(R.id.contenitoreFrammento, ic, "InserisciCapo");
+        ft.addToBackStack(null);
         ft.commit();
     }
 

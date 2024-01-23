@@ -19,7 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import Storage.RegistrazioneService;
 import Storage.UtenteDAO;
-import Utility.NetworkUtil;
+import com.example.outfitmakerfake.Utility.NetworkUtil;
 
 public class RegistrazioneController extends AppCompatActivity {
 

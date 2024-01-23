@@ -6,10 +6,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.outfitmakerfake.Utility.FragmentModificaCapo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +27,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class AreaUtenteController extends AppCompatActivity {
+    FragmentManager fm;
+    FrameLayout frammento_modifica_utente;
 
     public String nome, cognome, email, telefono;
     TextView nomeTV, cognomeTV, emailTV, telefonoTV;
@@ -33,6 +41,9 @@ public class AreaUtenteController extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.area_utente);
 
+        frammento_modifica_utente = findViewById(R.id.contenitoreModificaDati);
+
+        fm = getSupportFragmentManager();
         nomeTV = findViewById(R.id.nomeAU);
         cognomeTV = findViewById(R.id.cognomeAU);
         emailTV = findViewById(R.id.emailAU);
@@ -94,6 +105,26 @@ public class AreaUtenteController extends AppCompatActivity {
         cognomeTV.setText("Cognome: " + cognome);
         emailTV.setText("Email: " + email);
         telefonoTV.setText("Telefono: " + telefono);
+    }
+
+    public void inserimentoModificaDati(View v){
+        frammento_modifica_utente.setVisibility(View.VISIBLE);
+        FragmentModificaCapo modificaCapo = new FragmentModificaCapo();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.add(R.id.contenitoreModificaDati, modificaCapo, "ModificaDati");
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    public void rimuoviFrammentoModifica(View v){
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment modificaCapo = fm.findFragmentByTag("ModificaDati");
+        if(modificaCapo != null)
+            ft.remove(modificaCapo);
+        else
+            Toast.makeText(this, "Inserire prima un Fragment", Toast.LENGTH_SHORT).show();
+            frammento_modifica_utente.setVisibility(View.GONE);
+            ft.commit();
     }
 
     public void disconnessioneClicked(View v){

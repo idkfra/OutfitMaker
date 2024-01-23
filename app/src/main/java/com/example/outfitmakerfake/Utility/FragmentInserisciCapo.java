@@ -1,4 +1,4 @@
-package Utility;
+package com.example.outfitmakerfake.Utility;
 
 import android.app.Activity;
 import android.content.Intent;

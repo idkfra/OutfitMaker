@@ -1,16 +1,14 @@
-package Utility;
+package com.example.outfitmakerfake.Utility;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,12 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.outfitmakerfake.Entity.Capo;
 import com.example.outfitmakerfake.R;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -112,26 +106,45 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.btn_elimina.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int currentPosition = holder.getAdapterPosition();
-                if (currentPosition != RecyclerView.NO_POSITION) {
-                    db.collection("capi")
-                            .document(capoArrayList.get(currentPosition).getId_indumento())
-                            .delete()
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        // Rimuove l'elemento dalla lista utilizzando la posizione corrente
-                                        capoArrayList.remove(currentPosition);
-                                        // Notifica all'Adapter che i dati sono stati modificati
-                                        notifyItemRemoved(currentPosition);
-                                        Toast.makeText(context, "Indumento cancellato", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(context, "Error " + task.getException(), Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Conferma eliminazione");
+                builder.setMessage("Sei sicuro di voler eliminare questo indumento?");
+
+                builder.setPositiveButton("Elimina", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        int currentPosition = holder.getAdapterPosition();
+                        if (currentPosition != RecyclerView.NO_POSITION) {
+                            db.collection("capi")
+                                    .document(capoArrayList.get(currentPosition).getId_indumento())
+                                    .delete()
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                // Rimuove l'elemento dalla lista utilizzando la posizione corrente
+                                                capoArrayList.remove(currentPosition);
+                                                // Notifica all'Adapter che i dati sono stati modificati
+                                                notifyItemRemoved(currentPosition);
+                                                Toast.makeText(context, "Indumento cancellato", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(context, "Errore: " + task.getException(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                        }
+                    }
+                });
+
+                builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss(); // Chiudi il dialog senza eseguire l'eliminazione
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 
@@ -157,7 +170,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             occasione = itemView.findViewById(R.id.occasioneTVL);
 
             btn_elimina = itemView.findViewById(R.id.rimuovi_btn);
-
         }
     }
 

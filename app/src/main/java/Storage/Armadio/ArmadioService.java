@@ -1,13 +1,12 @@
-package Storage;
-
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
+package Storage.Armadio;
 
 import com.example.outfitmakerfake.Entity.Capo;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import Storage.Armadio.ArmadioDAO;
 
 public class ArmadioService {
 

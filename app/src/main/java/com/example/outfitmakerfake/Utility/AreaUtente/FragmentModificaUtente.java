@@ -22,8 +22,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import Storage.AreaUtenteDAO;
-import Storage.AreaUtenteService;
+import Storage.AreaUtente.AreaUtenteDAO;
+import Storage.AreaUtente.AreaUtenteService;
 
 public class FragmentModificaUtente extends Fragment {
 

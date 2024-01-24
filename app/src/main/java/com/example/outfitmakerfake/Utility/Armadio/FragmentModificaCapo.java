@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -28,8 +27,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 import java.util.List;
 
-import Storage.ArmadioDAO;
-import Storage.ArmadioService;
+import Storage.Armadio.ArmadioDAO;
+import Storage.Armadio.ArmadioService;
 
 public class FragmentModificaCapo extends Fragment {
     ArmadioService armadioService;

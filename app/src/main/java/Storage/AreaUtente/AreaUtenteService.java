@@ -1,6 +1,8 @@
-package Storage;
+package Storage.AreaUtente;
 
 import com.google.android.gms.tasks.Task;
+
+import Storage.AreaUtente.AreaUtenteDAO;
 
 public class AreaUtenteService {
 

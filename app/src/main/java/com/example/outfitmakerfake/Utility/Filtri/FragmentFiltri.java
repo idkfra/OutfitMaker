@@ -18,13 +18,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.outfitmakerfake.ArmadioController;
 import com.example.outfitmakerfake.Entity.Capo;
 import com.example.outfitmakerfake.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,10 +31,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import Storage.ArmadioDAO;
-import Storage.ArmadioService;
+import Storage.Armadio.ArmadioDAO;
+import Storage.Armadio.ArmadioService;
 
 public class FragmentFiltri extends Fragment {
 
@@ -48,8 +45,6 @@ public class FragmentFiltri extends Fragment {
 
     FirebaseFirestore db;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    //FirebaseUser currentUser = mAuth.getCurrentUser();
-
     GridLayout gridLayout;
     RadioGroup stagionalitaRG;
     RadioGroup tipologiaRG;

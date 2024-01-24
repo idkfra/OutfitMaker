@@ -17,8 +17,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import Storage.RegistrazioneService;
-import Storage.UtenteDAO;
+import Storage.Utente.RegistrazioneService;
+import Storage.Utente.UtenteDAO;
 import com.example.outfitmakerfake.Utility.NetworkUtil;
 
 public class RegistrazioneController extends AppCompatActivity {

@@ -29,20 +29,14 @@ import com.example.outfitmakerfake.ArmadioController;
 import com.example.outfitmakerfake.Entity.Capo;
 import com.example.outfitmakerfake.R;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import Storage.ArmadioDAO;
-import Storage.ArmadioService;
-import Storage.UtenteDAO;
+import Storage.Armadio.ArmadioDAO;
+import Storage.Armadio.ArmadioService;
+import Storage.Utente.UtenteDAO;
 
 import java.util.ArrayList;
 import java.util.List;

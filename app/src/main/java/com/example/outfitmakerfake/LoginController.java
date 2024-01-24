@@ -18,8 +18,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import Storage.LoginService;
-import Storage.UtenteDAO;
+import Storage.Utente.LoginService;
+import Storage.Utente.UtenteDAO;
 
 public class LoginController extends AppCompatActivity {
     FirebaseAuth mAuth;

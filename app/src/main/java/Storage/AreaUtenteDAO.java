@@ -85,7 +85,6 @@ public class AreaUtenteDAO {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String uid = user.getUid();
-            Log.d("MODIFICA", "userId: " + uid);
 
             FirebaseFirestore.getInstance().collection("utenti")
                     .whereEqualTo("uid", uid)

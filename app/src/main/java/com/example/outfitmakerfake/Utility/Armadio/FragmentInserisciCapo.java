@@ -1,4 +1,4 @@
-package com.example.outfitmakerfake.Utility;
+package com.example.outfitmakerfake.Utility.Armadio;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -50,8 +50,6 @@ import java.util.List;
 public class FragmentInserisciCapo extends Fragment {
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-    // Ottieni l'utente corrente
     FirebaseUser currentUser = mAuth.getCurrentUser();
     private static final int REQUEST_CODE = 14;
     Button buttonInserisciCapo;

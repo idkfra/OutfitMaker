@@ -1,4 +1,4 @@
-package com.example.outfitmakerfake.Utility;
+package com.example.outfitmakerfake.Utility.AreaUtente;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,7 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import Storage.AreaUtenteDAO;
 import Storage.AreaUtenteService;
 
-public class FragmentModificaCapo extends Fragment {
+public class FragmentModificaUtente extends Fragment {
 
     AreaUtenteService areaUtenteService;
     FirebaseAuth mAuth;
@@ -36,7 +36,7 @@ public class FragmentModificaCapo extends Fragment {
     Button btn_modifica_dati;
     ProgressBar progressBarModifica;
 
-    public FragmentModificaCapo() {
+    public FragmentModificaUtente() {
     }
 
     @Override

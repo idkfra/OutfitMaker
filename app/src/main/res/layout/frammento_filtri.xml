@@ -1,47 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/yellow">
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/yellow">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Modifica Capo"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="40dp"/>
+            android:orientation="horizontal">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="return"
-                android:onClick="rimuoviFrammentoModificaClicked"/>
-        </LinearLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/nome_frammento_mc"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Brand indumento"
-                android:textColorHint="@color/black"
-                android:textColor="@color/black"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Filtri"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="40dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/indietro"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingEnd="15dp"
+                    android:onClick="rimuoviFrammentoFiltri"/>
+            </RelativeLayout>
+        </LinearLayout>
 
         <TextView
             android:layout_marginTop="15dp"
@@ -52,7 +49,7 @@
             android:textColor="@color/black"/>
 
         <GridLayout
-            android:id="@+id/grid_layout_frammento_mc"
+            android:id="@+id/gridLayoutColoreFiltri"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:rowCount="4"
@@ -193,7 +190,7 @@
             android:layout_height="wrap_content">
 
             <RadioGroup
-                android:id="@+id/stagionaltita_frammento_mc"
+                android:id="@+id/radioGroupStagFiltri"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -233,56 +230,6 @@
             android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Occasione:"
-            android:textSize="20dp"
-            android:textColor="@color/black"/>
-
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RadioGroup
-                android:id="@+id/occasione_frammento_mc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Elegante"
-                    android:textColor="@color/black"
-                    android:buttonTint="@color/black"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sportivo"
-                    android:textColor="@color/black"
-                    android:buttonTint="@color/black"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Casual"
-                    android:textColor="@color/black"
-                    android:buttonTint="@color/black"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Streetwear"
-                    android:textColor="@color/black"
-                    android:buttonTint="@color/black"/>
-
-            </RadioGroup>
-        </HorizontalScrollView>
-
-        <TextView
-            android:layout_marginTop="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="Tipologia:"
             android:textSize="20dp"
             android:textColor="@color/black"/>
@@ -292,7 +239,7 @@
             android:layout_height="wrap_content">
 
             <RadioGroup
-                android:id="@+id/tipologia_frammento_mc"
+                android:id="@+id/radioGroupTipFiltri"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -390,52 +337,17 @@
             </RadioGroup>
         </HorizontalScrollView>
 
-        <TextView
-            android:layout_marginTop="15dp"
+        <Button
+            android:id="@+id/btn_filtri"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Immagine"
-            android:textSize="20dp"
-            android:textColor="@color/black"/>
+            android:text="Ricerca"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/btnImmagineCapo"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:text="Inserisci Immagine:"/>
-
-                <Button
-                    android:id="@+id/btn_modifica_capo_armadio"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:text="Modifica Indumento" />
-
-                <ProgressBar
-                    android:id="@+id/progressBar_modifica_capo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="gone"/>
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/immagineCapo"
-                android:layout_marginLeft="50dp"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@color/black"/>
-
-        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleListFiltri"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

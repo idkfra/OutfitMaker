@@ -3,19 +3,24 @@ package Storage;
 import android.util.Log;
 
 import com.example.outfitmakerfake.Entity.Capo;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,8 +67,6 @@ public class ArmadioDAO {
     }
 
     public Task<Boolean> aggiungiCapo(String nomeBrand, List<String> colori, String tipologia, String stagionalita, String occasione) {
-
-
         if (currentUser != null) {
             // L'utente è attualmente autenticato
             uid = currentUser.getUid();
@@ -136,21 +139,147 @@ public class ArmadioDAO {
         return taskCompletionSource.getTask();
     }
 
-    public Task<Boolean> aggiungiCapoArmadio(String idArmadio, Capo nuovoCapo){
-        TaskCompletionSource<Boolean> taskCompletionSource = new TaskCompletionSource<>();
+    public Task<Boolean> modificaCapo(String nomeBrand, List<String> colori, String tipologia, String stagionalita, String occasione) {
+        final TaskCompletionSource<Boolean> taskCompletionSource = new TaskCompletionSource<>();
 
-        db.collection("armadi")
-                .document(idArmadio)
-                .update("listaCapo", FieldValue.arrayUnion(nuovoCapo))
-                .addOnSuccessListener(aVoid -> {
-                    taskCompletionSource.setResult(true);
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("Firestore", "Errore durante l'aggiunta del capo alla listaCapo", e);
-                    taskCompletionSource.setResult(false);
-                });
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null){
+            String uid = user.getUid();
+
+            FirebaseFirestore.getInstance().collection("capi")
+                    .whereEqualTo("uid", uid)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@androidx.annotation.NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()) {
+                                if(!task.getResult().isEmpty()) {
+                                    DocumentSnapshot document = task.getResult().getDocuments().get(0);
+                                    DocumentReference userRef = document.getReference();
+
+                                    Map<String, Object> nuoviDatiCapo  = new HashMap<>();
+                                    nuoviDatiCapo.put("nome_brand", nomeBrand);
+                                    nuoviDatiCapo.put("colori", colori);
+                                    nuoviDatiCapo.put("tipologia", tipologia);
+                                    nuoviDatiCapo.put("stagionalita", stagionalita);
+                                    nuoviDatiCapo.put("occasione", occasione);
+
+                                    userRef.update(nuoviDatiCapo)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    taskCompletionSource.setResult(true);
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.e("MODIFICA", "Errore durante l'aggiornamento dei dati utente", e);
+                                                    taskCompletionSource.setResult(false);
+                                                }
+                                            });
+                                }
+
+                            }
+                        }
+                    });
+        }
         return taskCompletionSource.getTask();
     }
+
+    /*public Task<Boolean> ricercaFiltri(ArrayList<String> colori, String stagionalita, String tipologia) {
+        final TaskCompletionSource<Boolean> taskCompletionSource = new TaskCompletionSource<>();
+
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        if (user != null) {
+            String uid = user.getUid();
+
+            FirebaseFirestore.getInstance().collection("capi")
+                    .whereEqualTo("uid", uid)
+                    .whereArrayContainsAny("colori", colori)
+                    .whereEqualTo("stagionalita", stagionalita)
+                    .whereEqualTo("tipologia", tipologia)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            try {
+                                if (task.isSuccessful()) {
+                                    QuerySnapshot querySnapshot = task.getResult();
+
+                                    if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                                        taskCompletionSource.setResult(true);
+                                    } else {
+                                        taskCompletionSource.setResult(false);
+                                    }
+                                } else {
+                                    throw task.getException();
+                                }
+                            } catch (Exception e) {
+                                taskCompletionSource.setException(e);
+                            }
+                        }
+                    });
+        } else {
+            taskCompletionSource.setResult(false);
+        }
+
+        return taskCompletionSource.getTask();
+    }*/
+
+    public Task<ArrayList<Capo>> ricercaFiltri(ArrayList<String> colori, String stagionalita, String tipologia) {
+        final TaskCompletionSource<ArrayList<Capo>> taskCompletionSource = new TaskCompletionSource<>();
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        ArrayList<Capo> capi = new ArrayList<>();
+
+        if (user != null) {
+            String uid = user.getUid();
+
+            db.collection("capi")
+                    .whereEqualTo("uid", uid)
+                    .whereArrayContainsAny("colori", colori)
+                    .whereEqualTo("stagionalita", stagionalita)
+                    .whereEqualTo("tipologia", tipologia)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@androidx.annotation.NonNull Task<QuerySnapshot> task) {
+                            try {
+                                if (task.isSuccessful()) {
+                                    QuerySnapshot querySnapshot = task.getResult();
+
+                                    if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                                        for (QueryDocumentSnapshot document : querySnapshot) {
+                                            String nome_brand = document.getString("nome_brand");
+                                            List<String> colori = (List<String>) document.get("colori");
+                                            String tipologia = document.getString("tipologia");
+                                            String stagionalita = document.getString("stagionalita");
+                                            String occasione = document.getString("occasione");
+
+                                            Capo capo = new Capo(nome_brand, colori, tipologia, stagionalita, occasione);
+                                            capi.add(capo);
+                                        }
+                                    }
+                                } else {
+                                    throw task.getException();
+                                }
+
+                                taskCompletionSource.setResult(capi);
+                            } catch (Exception e) {
+                                taskCompletionSource.setException(e);
+                            }
+                        }
+                    });
+        } else {
+            taskCompletionSource.setException(new Exception("Utente non valido"));
+        }
+
+        return taskCompletionSource.getTask();
+    }
+
+
 
     public String generateUniqueArmadioId() {
         return UUID.randomUUID().toString();

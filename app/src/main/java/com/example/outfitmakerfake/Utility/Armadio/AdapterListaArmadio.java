@@ -1,4 +1,4 @@
-package com.example.outfitmakerfake.Utility;
+package com.example.outfitmakerfake.Utility.Armadio;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class AdapterListaArmadio extends RecyclerView.Adapter<AdapterListaArmadio.MyViewHolder> {
 
     Context context;
     ArrayList<Capo> capoArrayList;
@@ -33,7 +32,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     FirebaseFirestore db;
     FirebaseAuth auth;
 
-    public MyAdapter(Context context, ArrayList<Capo> capoArrayList) {
+    public AdapterListaArmadio(Context context, ArrayList<Capo> capoArrayList) {
         this.context = context;
         this.capoArrayList = capoArrayList;
         db = FirebaseFirestore.getInstance();
@@ -42,7 +41,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @NonNull
     @Override
-    public MyAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdapterListaArmadio.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(context).inflate(R.layout.singolo_elemento_armadio, parent, false);
 
@@ -50,7 +49,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterListaArmadio.MyViewHolder holder, int position) {
         Log.d("TAG", "Entra in onBindViewHolder");
 
         Capo capo = capoArrayList.get(position);

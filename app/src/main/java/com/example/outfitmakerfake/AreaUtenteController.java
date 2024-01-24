@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.outfitmakerfake.Utility.FragmentModificaCapo;
+import com.example.outfitmakerfake.Utility.AreaUtente.FragmentModificaUtente;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -109,7 +109,7 @@ public class AreaUtenteController extends AppCompatActivity {
 
     public void inserimentoModificaDati(View v){
         frammento_modifica_utente.setVisibility(View.VISIBLE);
-        FragmentModificaCapo modificaCapo = new FragmentModificaCapo();
+        FragmentModificaUtente modificaCapo = new FragmentModificaUtente();
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(R.id.contenitoreModificaDati, modificaCapo, "ModificaDati");
         ft.addToBackStack(null);

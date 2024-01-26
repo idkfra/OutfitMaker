@@ -1,4 +1,4 @@
-package com.example.outfitmakerfake;
+package com.example.outfitmakerfake.Utility.Utente;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,9 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.outfitmakerfake.Entity.Utente;
+import com.example.outfitmakerfake.Home;
+import com.example.outfitmakerfake.R;
+import com.example.outfitmakerfake.Utility.Utente.LoginController;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -135,7 +138,6 @@ public class RegistrazioneController extends AppCompatActivity {
                             Exception exception = task.getException();
                             Toast.makeText(getApplicationContext(), "Errore: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                        progressBar.setVisibility(View.INVISIBLE);
                     }
                 });
     }

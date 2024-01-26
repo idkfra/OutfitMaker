@@ -9,24 +9,25 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/outfit_maker_logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OutfitMakerFake"
         tools:targetApi="31">
         <activity
-            android:name=".LoginController"
+            android:name=".Utility.Utente.LoginController"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegistrazioneController" />
+        <activity android:name=".Utility.Utente.RegistrazioneController" />
         <activity android:name=".Home" />
-        <activity android:name=".AreaUtenteController"/>
-        <activity android:name=".ArmadioController"/>
+        <activity android:name=".Utility.AreaUtente.AreaUtenteController"/>
+        <activity android:name=".Utility.Armadio.ArmadioController"/>
+        <activity android:name=".Utility.CreazioneOutfit.CreazioneOutfitController"/>
     </application>
 
 </manifest>

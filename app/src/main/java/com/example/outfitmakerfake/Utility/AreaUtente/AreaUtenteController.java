@@ -1,4 +1,4 @@
-package com.example.outfitmakerfake;
+package com.example.outfitmakerfake.Utility.AreaUtente;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.outfitmakerfake.Utility.AreaUtente.FragmentModificaUtente;
+import com.example.outfitmakerfake.Home;
+import com.example.outfitmakerfake.Utility.Utente.LoginController;
+import com.example.outfitmakerfake.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;

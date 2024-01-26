@@ -6,14 +6,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/yellow"
-    tools:context=".RegistrazioneController"
+    tools:context=".Utility.Utente.RegistrazioneController"
     android:gravity="center">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Registrazione"
-        android:textSize="30dp"/>
+        android:textSize="30dp"
+        android:textColor="@color/black"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -91,6 +92,7 @@
         android:layout_height="wrap_content"
         android:text="Vai a login"
         android:textSize="40dp"
-        android:onClick="vaiLogin"/>
+        android:onClick="vaiLogin"
+        android:textColor="@color/black"/>
 
 </LinearLayout>

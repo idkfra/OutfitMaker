@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".LoginController"
+    tools:context=".Utility.Utente.LoginController"
     android:background="@color/yellow"
     android:gravity="center">
 
@@ -13,7 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
-        android:textSize="30dp"/>
+        android:textSize="30dp"
+        android:textColor="@color/black"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -21,22 +22,29 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:boxStrokeColor="@color/black"
+        app:boxStrokeWidth="2dp">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextEmailLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"/>
+            android:hint="Email"
+            android:textColorHint="@color/black"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:boxStrokeColor="@color/black"
+        app:boxBackgroundColor="@color/black"
+        app:hintTextColor="@color/black">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextPasswordLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
+            android:textColorHint="@color/black"
             android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -62,6 +70,7 @@
         android:layout_height="wrap_content"
         android:text="Vai a registrazione"
         android:textSize="40dp"
-        android:onClick="vaiRegistrazione"/>
+        android:onClick="vaiRegistrazione"
+        android:textColor="@color/black"/>
 
 </LinearLayout>

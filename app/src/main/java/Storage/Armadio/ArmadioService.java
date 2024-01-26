@@ -31,4 +31,20 @@ public class ArmadioService {
         return armadioDAO.ricercaFiltri(colori, stagionalita, tipologia);
     }
 
+    public Task<Boolean> cambiaSceltoTrue(String idCapo){
+        return armadioDAO.cambiaSceltoTrue(idCapo);
+    }
+
+    public Task<Boolean> cambiaSceltoFalse(String idCapo){
+        return armadioDAO.cambiaSceltoFalse(idCapo);
+    }
+
+    public Task<Boolean> resettaSceltaCapi(){
+        return armadioDAO.resettaSceltaCapi();
+    }
+
+    public Task<Boolean> creaOutfit(ArrayList<Capo> lista_capi){
+        return armadioDAO.creaOutfit(lista_capi);
+    }
+
 }

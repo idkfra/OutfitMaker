@@ -80,7 +80,6 @@ public class ArmadioDAO {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             if (documentSnapshot.exists()) {
-                                // Il documento utente esiste
                                 idArmadio = documentSnapshot.getString("idArmadio");
                                 if (idArmadio != null) {
                                     // Hai ottenuto con successo l'idArmadio associato all'utente
@@ -121,6 +120,7 @@ public class ArmadioDAO {
         capoMap.put("stagionalita", stagionalita);
         capoMap.put("occasione", occasione);
         capoMap.put("uid", uid);
+        capoMap.put("isScelto", false);
 
         // Nota: Non è possibile memorizzare direttamente un'immagine in Firestore, quindi potresti doverla salvare separatamente, ad esempio su Firebase Storage, e memorizzare solo il percorso o l'URL dell'immagine nel documento.
 
@@ -187,46 +187,6 @@ public class ArmadioDAO {
         return taskCompletionSource.getTask();
     }
 
-    /*public Task<Boolean> ricercaFiltri(ArrayList<String> colori, String stagionalita, String tipologia) {
-        final TaskCompletionSource<Boolean> taskCompletionSource = new TaskCompletionSource<>();
-
-        FirebaseUser user = mAuth.getCurrentUser();
-
-        if (user != null) {
-            String uid = user.getUid();
-
-            FirebaseFirestore.getInstance().collection("capi")
-                    .whereEqualTo("uid", uid)
-                    .whereArrayContainsAny("colori", colori)
-                    .whereEqualTo("stagionalita", stagionalita)
-                    .whereEqualTo("tipologia", tipologia)
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            try {
-                                if (task.isSuccessful()) {
-                                    QuerySnapshot querySnapshot = task.getResult();
-
-                                    if (querySnapshot != null && !querySnapshot.isEmpty()) {
-                                        taskCompletionSource.setResult(true);
-                                    } else {
-                                        taskCompletionSource.setResult(false);
-                                    }
-                                } else {
-                                    throw task.getException();
-                                }
-                            } catch (Exception e) {
-                                taskCompletionSource.setException(e);
-                            }
-                        }
-                    });
-        } else {
-            taskCompletionSource.setResult(false);
-        }
-
-        return taskCompletionSource.getTask();
-    }*/
 
     public Task<ArrayList<Capo>> ricercaFiltri(ArrayList<String> colori, String stagionalita, String tipologia) {
         final TaskCompletionSource<ArrayList<Capo>> taskCompletionSource = new TaskCompletionSource<>();
@@ -279,7 +239,176 @@ public class ArmadioDAO {
         return taskCompletionSource.getTask();
     }
 
+    public Task<Boolean> cambiaSceltoTrue(String id_indumento) {
+        final TaskCompletionSource<Boolean> taskCompletionSource = new TaskCompletionSource<>();
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String uid = user.getUid();
+            FirebaseFirestore.getInstance().collection("capi")
+                    .whereEqualTo("uid", uid)
+                    .whereEqualTo("id_indumento", id_indumento)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@androidx.annotation.NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                if (!task.getResult().isEmpty()) {
+                                    DocumentSnapshot document = task.getResult().getDocuments().get(0);
+                                    DocumentReference userRef = document.getReference();
+
+                                    //Map<String, Object> nuoviDatiCapo = new HashMap<>();
+                                    //nuoviDatiCapo.put("isScelto", true);
+
+                                    userRef.update("isScelto", true)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    taskCompletionSource.setResult(true);
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.e("INSERTTT", "Errore durante l'aggiornamento dei dati utente", e);
+                                                    taskCompletionSource.setResult(false);
+                                                }
+                                            });
+                                } else {
+                                    Log.e("INSERTTT", "Documento non trovato per id_indumento: " + id_indumento);
+                                    taskCompletionSource.setResult(false);
+                                }
+                            }
+                        }
+                    });
+        }
+        return taskCompletionSource.getTask();
+    }
+
+    public Task<Boolean> cambiaSceltoFalse(String id_indumento) {
+        final TaskCompletionSource<Boolean> taskCompletionSource = new TaskCompletionSource<>();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String uid = user.getUid();
+            FirebaseFirestore.getInstance().collection("capi")
+                    .whereEqualTo("uid", uid)
+                    .whereEqualTo("id_indumento", id_indumento)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@androidx.annotation.NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                if (!task.getResult().isEmpty()) {
+                                    DocumentSnapshot document = task.getResult().getDocuments().get(0);
+                                    DocumentReference userRef = document.getReference();
+
+                                    //Map<String, Object> nuoviDatiCapo = new HashMap<>();
+                                    //nuoviDatiCapo.put("isScelto", true);
+
+                                    userRef.update("isScelto", false)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    taskCompletionSource.setResult(true);
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.e("INSERTTT", "Errore durante l'aggiornamento dei dati utente", e);
+                                                    taskCompletionSource.setResult(false);
+                                                }
+                                            });
+                                } else {
+                                    Log.e("INSERTTT", "Documento non trovato per id_indumento: " + id_indumento);
+                                    taskCompletionSource.setResult(false);
+                                }
+                            }
+                        }
+                    });
+        }
+        return taskCompletionSource.getTask();
+    }
+
+    public Task<Boolean> resettaSceltaCapi() {
+        final TaskCompletionSource<Boolean> taskCompletionSource = new TaskCompletionSource<>();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String uid = user.getUid();
+            FirebaseFirestore.getInstance().collection("capi")
+                    .whereEqualTo("uid", uid)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@androidx.annotation.NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                if (!task.getResult().isEmpty()) {
+                                    List<DocumentSnapshot> documents = task.getResult().getDocuments();
+
+                                    // Itera su tutti i documenti e imposta "isScelto" a false
+                                    for (DocumentSnapshot document : documents) {
+                                        DocumentReference userRef = document.getReference();
+
+                                        Map<String, Object> nuoviDatiCapo = new HashMap<>();
+                                        nuoviDatiCapo.put("isScelto", false);
+
+                                        userRef.update(nuoviDatiCapo)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void unused) {
+                                                        // Puoi aggiungere del log o gestire altri casi di successo qui
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.e("INSERTTT", "Errore durante l'aggiornamento dei dati utente", e);
+                                                        taskCompletionSource.setResult(false);
+                                                    }
+                                                });
+                                    }
+                                    taskCompletionSource.setResult(true);
+                                } else {
+                                    // Nessun documento trovato
+                                    taskCompletionSource.setResult(false);
+                                }
+                            }
+                        }
+                    });
+        } else {
+            taskCompletionSource.setResult(false);
+        }
+        return taskCompletionSource.getTask();
+    }
+
+    public Task<Boolean> creaOutfit(ArrayList<Capo> lista_capi){
+        TaskCompletionSource<Boolean> taskCompletionSource = new TaskCompletionSource<>();
+        if(currentUser != null){
+            uid = currentUser.getUid();
+
+            String id_outfit = generateUniqueOutfitId();
+
+           Map<String, Object> outfit_new = new HashMap<>();
+           outfit_new.put("uid", uid);
+           outfit_new.put("id_outfit", id_outfit);
+           outfit_new.put("lista_capi", lista_capi);
+
+           db.collection("outfit")
+                   .document(id_outfit)
+                   .set(outfit_new)
+                   .addOnCompleteListener(task -> {
+                       if (task.isSuccessful()) {
+                           taskCompletionSource.setResult(true);
+                       } else {
+                           Log.d("CAZZOCULO", "Errore durante l'aggiunta del capo al documento: " + task.getException());
+                           taskCompletionSource.setResult(false);
+                       }
+                   });
+        }
+        return taskCompletionSource.getTask();
+    }
 
     public String generateUniqueArmadioId() {
         return UUID.randomUUID().toString();
@@ -288,4 +417,6 @@ public class ArmadioDAO {
     public String generateUniqueIndumentoId() {
         return UUID.randomUUID().toString();
     }
+
+    public String generateUniqueOutfitId(){return UUID.randomUUID().toString();}
 }

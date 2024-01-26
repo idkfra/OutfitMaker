@@ -1,4 +1,4 @@
-package com.example.outfitmakerfake;
+package com.example.outfitmakerfake.Utility.Armadio;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,8 +19,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.outfitmakerfake.Entity.Capo;
+import com.example.outfitmakerfake.R;
+import com.example.outfitmakerfake.Utility.AreaUtente.AreaUtenteController;
 import com.example.outfitmakerfake.Utility.Filtri.FragmentFiltri;
-import com.example.outfitmakerfake.Utility.Armadio.FragmentModificaCapo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
@@ -31,9 +32,6 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-
-import com.example.outfitmakerfake.Utility.Armadio.FragmentInserisciCapo;
-import com.example.outfitmakerfake.Utility.Armadio.AdapterListaArmadio;
 
 public class ArmadioController extends AppCompatActivity {
     FragmentManager fm;
@@ -71,7 +69,6 @@ public class ArmadioController extends AppCompatActivity {
 
         recyclerView.setAdapter(myAdapter);
         EventChangeListener();
-
     }
 
     private void EventChangeListener() {

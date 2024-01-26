@@ -14,8 +14,18 @@ public class Capo {
     private String stagionalita;
     private String occasione;
     private Bitmap immagine;
+    private Boolean isScelto = true;
 
     public Capo() {
+    }
+
+    public Capo(String nome_brand, List<String> colori, String tipologia, String stagionalita, String occasione, Boolean isScelto) {
+        this.nome_brand = nome_brand;
+        this.colori = colori;
+        this.tipologia = tipologia;
+        this.stagionalita = stagionalita;
+        this.occasione = occasione;
+        this.isScelto = isScelto;
     }
 
     public Capo(String id_indumento, String id_armadio, String nome_brand, List<String> colori, String tipologia, String stagionalita, String occasione) {
@@ -101,6 +111,22 @@ public class Capo {
 
     public void setOccasione(String occasione) {
         this.occasione = occasione;
+    }
+
+    public String getId_armadio() {
+        return id_armadio;
+    }
+
+    public void setId_armadio(String id_armadio) {
+        this.id_armadio = id_armadio;
+    }
+
+    public Boolean getScelto() {
+        return isScelto;
+    }
+
+    public void setScelto(Boolean scelto) {
+        isScelto = scelto;
     }
 
     public Bitmap getImmagine() {

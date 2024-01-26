@@ -9,6 +9,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.outfitmakerfake.Utility.AreaUtente.AreaUtenteController;
+import com.example.outfitmakerfake.Utility.Armadio.ArmadioController;
+import com.example.outfitmakerfake.Utility.CreazioneOutfit.CreazioneOutfitController;
+import com.example.outfitmakerfake.Utility.Utente.LoginController;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -34,6 +38,11 @@ public class Home extends AppCompatActivity {
         } else {
             nome_cognome.setText(user.getEmail());
         }
+    }
+
+    public void creazioneClicked(View v){
+        Intent i = new Intent(getApplicationContext(), CreazioneOutfitController.class);
+        startActivity(i);
     }
 
     public void armadioClicked(View v){

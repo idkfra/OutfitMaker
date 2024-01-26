@@ -1,4 +1,4 @@
-package com.example.outfitmakerfake.Utility.Utente;
+package com.example.outfitmakerfake.Utente;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.example.outfitmakerfake.Entity.Utente;
 import com.example.outfitmakerfake.Home;
 import com.example.outfitmakerfake.R;
-import com.example.outfitmakerfake.Utility.Utente.LoginController;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;

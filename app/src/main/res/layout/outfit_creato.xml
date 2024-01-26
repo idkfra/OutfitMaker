@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/yellow">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Outfit"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:textSize="40dp"/>
+
+    <Button
+        android:id="@+id/btn_salva_outfit_creato"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Salva outfit"
+        android:layout_marginLeft="20dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleList_outfit_creato"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

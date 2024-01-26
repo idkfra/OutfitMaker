@@ -1,4 +1,4 @@
-package com.example.outfitmakerfake.Utility.AreaUtente;
+package com.example.outfitmakerfake.AreaUtente;
 
 import android.content.Intent;
 import android.os.Bundle;

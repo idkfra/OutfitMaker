@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,19 +8,16 @@
     android:layout_margin="16dp">
 
     <LinearLayout
-        android:id="@+id/linear_layout_creazione"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="vertical"
         android:background="@color/white"
         app:cardElevation="8dp"
-        app:cardCornerRadius="8dp"
-        android:onClick="selezionaCapoClicked">
-        
+        app:cardCornerRadius="8dp">
+
         <ImageView
-            android:layout_marginTop="20dp"
-            android:id="@+id/immagine_capo_creazione"
+            android:id="@+id/immagineOC"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_marginBottom="10dp"
@@ -44,7 +40,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/nome_capo_creazione"
+                android:id="@+id/nomeOC"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -69,7 +65,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/colori_capo_creazione"
+                android:id="@+id/coloriOC"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -94,7 +90,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/stagionalità_capo_creazione"
+                android:id="@+id/stagionalitàOC"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:layout_marginStart="8dp"
@@ -119,7 +115,7 @@
                 android:layout_marginLeft="8dp" />
 
             <TextView
-                android:id="@+id/occasione_capo_creazione"
+                android:id="@+id/occasioneOC"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -145,7 +141,7 @@
                 />
 
             <TextView
-                android:id="@+id/tipologia_capo_creazione"
+                android:id="@+id/tipologiaOC"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -153,32 +149,5 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"/>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btn_inserisci_capo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Scegli"/>
-
-
-            <Button
-                android:id="@+id/btn_crea_outfit_f"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Crea Outfit"/>
-
-
-            <Button
-                android:id="@+id/btn_resetta_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Reset"/>
-        </LinearLayout>
-
     </LinearLayout>
 </androidx.cardview.widget.CardView>

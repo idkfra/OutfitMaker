@@ -1,4 +1,4 @@
-package com.example.outfitmakerfake.Utility.CreazioneOutfit;
+package com.example.outfitmakerfake.CreazioneOutfit;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,43 +7,30 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputContentInfo;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.outfitmakerfake.Entity.Capo;
-import com.example.outfitmakerfake.Entity.Outfit;
 import com.example.outfitmakerfake.R;
-import com.example.outfitmakerfake.RecycleViewCreazioneInterface;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import Storage.Armadio.ArmadioDAO;
 import Storage.Armadio.ArmadioService;
 
 public class AdapterCreazioneOutfit extends RecyclerView.Adapter<AdapterCreazioneOutfit.SupportCreazione> {
-    
+
     Context context;
     public ArrayList<Capo> capoArrayList;
     String idCapo;
@@ -60,13 +47,13 @@ public class AdapterCreazioneOutfit extends RecyclerView.Adapter<AdapterCreazion
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
     }
-    
+
     @Override
     public AdapterCreazioneOutfit.@NonNull SupportCreazione onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         View v = LayoutInflater.from(context).inflate(R.layout.singolo_elemento_creazione_outfit, parent, false);
         return new SupportCreazione(v);
     }
-    
+
     @Override
     public void onBindViewHolder(AdapterCreazioneOutfit.@NonNull SupportCreazione supportCreazione, int position){
         Capo capo = capoArrayList.get(position);
@@ -111,73 +98,6 @@ public class AdapterCreazioneOutfit extends RecyclerView.Adapter<AdapterCreazion
         } else if(capo.getTipologia().equals("Scarpe")){
             supportCreazione.immagine.setImageResource(R.drawable.scarpa_casual);
         }
-
-        /*supportCreazione.isScelto.setText("isScelto: " + capo.getScelto());
-
-        supportCreazione.btn_inserisci_capo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String id_Capo = capo.getId_indumento();
-
-                supportCreazione.progressBar.setVisibility(View.VISIBLE);
-                if (!capo.getScelto()) {
-                    armadioService.cambiaSceltoTrue(id_Capo).addOnCompleteListener(new OnCompleteListener<Boolean>() {
-                        @Override
-                        public void onComplete(@androidx.annotation.NonNull Task<Boolean> task) {
-                            Log.d("INSERTTT", "task = " + task.getResult());
-                            Log.d("INSERTTT", "entra in onClick");
-                            if (task.isSuccessful()) {
-                                boolean modificaRiuscita = task.getResult();
-                                Log.d("INSERTTT", "task = " + modificaRiuscita);
-                                if (modificaRiuscita) {
-                                    Log.d("INSERTTT", "entra in modificaRiuscita");
-                                    supportCreazione.progressBar.setVisibility(View.INVISIBLE);
-                                    Toast.makeText(v.getContext(), "Dati modificati con successo in True", Toast.LENGTH_SHORT).show();
-                                    supportCreazione.linearLayout.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.violet));                                    notifyDataSetChanged();
-                                } else {
-                                    supportCreazione.progressBar.setVisibility(View.INVISIBLE);
-                                    Log.d("MODIFICA", "entra in modificaErrore");
-                                    Toast.makeText(v.getContext(), "Errore durante la modifica dei dati", Toast.LENGTH_SHORT).show();
-                                }
-                            } else {
-                                supportCreazione.progressBar.setVisibility(View.INVISIBLE);
-                                Exception exception = task.getException();
-                                Log.d("INSERTTT", String.valueOf(task.getException()));
-                                Toast.makeText(v.getContext(), "Errore: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-
-                } else {
-                    armadioService.cambiaSceltoFalse(id_Capo).addOnCompleteListener(new OnCompleteListener<Boolean>() {
-                        @Override
-                        public void onComplete(@androidx.annotation.NonNull Task<Boolean> task) {
-                            Log.d("INSERTTT", "task = " + task.getResult());
-                            Log.d("INSERTTT", "entra in onClick");
-                            if (task.isSuccessful()) {
-                                boolean modificaRiuscita = task.getResult();
-                                Log.d("INSERTTT", "task = " + modificaRiuscita);
-                                if (modificaRiuscita) {
-                                    Log.d("INSERTTT", "entra in modificaRiuscita");
-                                    supportCreazione.progressBar.setVisibility(View.INVISIBLE);
-                                    Toast.makeText(v.getContext(), "Dati modificati con success in False", Toast.LENGTH_SHORT).show();
-                                    supportCreazione.linearLayout.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.white));                                    notifyDataSetChanged();
-                                } else {
-                                    supportCreazione.progressBar.setVisibility(View.INVISIBLE);
-                                    Log.d("MODIFICA", "entra in modificaErrore");
-                                    Toast.makeText(v.getContext(), "Errore durante la modifica dei dati", Toast.LENGTH_SHORT).show();
-                                }
-                            } else {
-                                supportCreazione.progressBar.setVisibility(View.INVISIBLE);
-                                Exception exception = task.getException();
-                                Log.d("INSERTTT", String.valueOf(task.getException()));
-                                Toast.makeText(v.getContext(), "Errore: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                }
-            }
-        });*/
 
         supportCreazione.btn_inserisci_capo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -249,13 +169,15 @@ public class AdapterCreazioneOutfit extends RecyclerView.Adapter<AdapterCreazion
                     armadioService.creaOutfit(outfit).addOnCompleteListener(new OnCompleteListener<Boolean>() {
                         @Override
                         public void onComplete(@androidx.annotation.NonNull Task<Boolean> task) {
-                            supportCreazione.progressBar_outfit.setVisibility(View.VISIBLE);
                             if(task.isSuccessful()){
                                 boolean creazione_outfit = task.getResult();
                                 Log.d("INSERTTT", "creazione_outfit = " + creazione_outfit);
 
                                 if(creazione_outfit){
                                     Toast.makeText(v.getContext(), "Outfit creato con successo", Toast.LENGTH_SHORT).show();
+                                    Intent i = new Intent(context, OutfitCreato.class);
+                                    i.putParcelableArrayListExtra("outfit", outfit);
+                                    context.startActivity(i);
 
                                 } else {
                                     Log.d("INSERTTT", "Entra in else di creazioneIndumento");
@@ -266,13 +188,20 @@ public class AdapterCreazioneOutfit extends RecyclerView.Adapter<AdapterCreazion
                                 Log.d("INDUMENTO", "else in onComplete exception: " + exception);
                                 Toast.makeText(v.getContext(), "Errore: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
                             }
-                            supportCreazione.progressBar_outfit.setVisibility(View.INVISIBLE);
                         }
                     });
                 } else {
                     Toast.makeText(v.getContext(), "Numero di capi errato", Toast.LENGTH_SHORT).show();
                     return;
                 }
+            }
+        });
+
+        supportCreazione.btn_reset_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                outfit.clear();
+                Toast.makeText(context, "Lista svuotata", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -284,10 +213,7 @@ public class AdapterCreazioneOutfit extends RecyclerView.Adapter<AdapterCreazion
 
     public static class SupportCreazione extends RecyclerView.ViewHolder {
         LinearLayout linearLayout;
-        Button btn_inserisci_capo;
-        Button btn_crea_outfit_f;
-        ProgressBar progressBar;
-        ProgressBar progressBar_outfit; //progressBar nel singolo elemento quando clicco per creare outfit
+        Button btn_inserisci_capo, btn_crea_outfit_f, btn_reset_list;
         TextView nome, listaColori, tipologia, stagionalita, occasione;
         ImageView immagine;
 
@@ -302,11 +228,11 @@ public class AdapterCreazioneOutfit extends RecyclerView.Adapter<AdapterCreazion
             stagionalita = itemView.findViewById(R.id.stagionalità_capo_creazione);
             occasione = itemView.findViewById(R.id.occasione_capo_creazione);
             btn_inserisci_capo = itemView.findViewById(R.id.btn_inserisci_capo);
-            progressBar = itemView.findViewById(R.id.progress_bar_scelta);
             btn_crea_outfit_f = itemView.findViewById(R.id.btn_crea_outfit_f);
-            progressBar_outfit = itemView.findViewById(R.id.progressBar_outfit);
+            btn_reset_list = itemView.findViewById(R.id.btn_resetta_list);
+
         }
     }
-    
-    
+
+
 }

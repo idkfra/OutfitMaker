@@ -9,10 +9,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.outfitmakerfake.Utility.AreaUtente.AreaUtenteController;
-import com.example.outfitmakerfake.Utility.Armadio.ArmadioController;
-import com.example.outfitmakerfake.Utility.CreazioneOutfit.CreazioneOutfitController;
-import com.example.outfitmakerfake.Utility.Utente.LoginController;
+import com.example.outfitmakerfake.AreaUtente.AreaUtenteController;
+import com.example.outfitmakerfake.Armadio.ArmadioController;
+import com.example.outfitmakerfake.CreazioneOutfit.CreazioneOutfitController;
+import com.example.outfitmakerfake.Utente.LoginController;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

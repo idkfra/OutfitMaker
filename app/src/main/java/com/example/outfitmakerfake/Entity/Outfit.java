@@ -5,12 +5,15 @@ import java.util.ArrayList;
 public class Outfit {
     private String id_outfit;
     private String id_utente;
-    private ArrayList<Capo> lista_outfit;
+    private ArrayList<Capo> lista_capi;
 
-    public Outfit(String id_outfit, String id_utente, ArrayList<Capo> lista_outfit) {
+    public Outfit() {
+    }
+
+    public Outfit(String id_outfit, String id_utente, ArrayList<Capo> lista_capi) {
         this.id_outfit = id_outfit;
         this.id_utente = id_utente;
-        this.lista_outfit = lista_outfit;
+        this.lista_capi = lista_capi;
     }
 
     public String getId_outfit() {
@@ -29,11 +32,11 @@ public class Outfit {
         this.id_utente = id_utente;
     }
 
-    public ArrayList<Capo> getLista_outfit() {
-        return lista_outfit;
+    public ArrayList<Capo> getLista_capi() {
+        return lista_capi;
     }
 
-    public void setLista_outfit(ArrayList<Capo> lista_outfit) {
-        this.lista_outfit = lista_outfit;
+    public void setLista_capi(ArrayList<Capo> lista_capi) {
+        this.lista_capi = lista_capi;
     }
 }

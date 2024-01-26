@@ -1,4 +1,4 @@
-package com.example.outfitmakerfake.Utility.Armadio;
+package com.example.outfitmakerfake.Armadio;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,8 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.outfitmakerfake.Entity.Capo;
 import com.example.outfitmakerfake.R;
-import com.example.outfitmakerfake.Utility.AreaUtente.AreaUtenteController;
-import com.example.outfitmakerfake.Utility.Filtri.FragmentFiltri;
+import com.example.outfitmakerfake.AreaUtente.AreaUtenteController;
+import com.example.outfitmakerfake.Filtri.FragmentFiltri;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;

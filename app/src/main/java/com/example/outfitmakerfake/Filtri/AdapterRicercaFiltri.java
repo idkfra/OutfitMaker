@@ -1,4 +1,4 @@
-package com.example.outfitmakerfake.Utility.Filtri;
+package com.example.outfitmakerfake.Filtri;
 
 
 import android.app.AlertDialog;
@@ -140,7 +140,6 @@ public class AdapterRicercaFiltri extends RecyclerView.Adapter<AdapterRicercaFil
                 dialog.show();
             }
         });
-
     }
 
     @Override

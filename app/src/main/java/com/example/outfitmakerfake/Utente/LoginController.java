@@ -1,4 +1,4 @@
-package com.example.outfitmakerfake.Utility.Utente;
+package com.example.outfitmakerfake.Utente;
 
 import androidx.appcompat.app.AppCompatActivity;
 

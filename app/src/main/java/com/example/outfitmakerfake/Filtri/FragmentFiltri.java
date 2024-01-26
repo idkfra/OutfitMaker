@@ -1,4 +1,4 @@
-package com.example.outfitmakerfake.Utility.Filtri;
+package com.example.outfitmakerfake.Filtri;
 
 import android.os.Bundle;
 import android.util.Log;

@@ -1,4 +1,4 @@
-package com.example.outfitmakerfake.Utility.Armadio;
+package com.example.outfitmakerfake.Armadio;
 
 import android.content.Intent;
 import android.os.Bundle;

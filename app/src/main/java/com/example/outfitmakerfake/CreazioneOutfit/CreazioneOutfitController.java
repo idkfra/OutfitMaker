@@ -1,4 +1,4 @@
-package com.example.outfitmakerfake.Utility.CreazioneOutfit;
+package com.example.outfitmakerfake.CreazioneOutfit;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,7 +38,6 @@ public class CreazioneOutfitController extends AppCompatActivity implements Recy
     ArrayList<Capo> capoArrayList;
     ArrayList<Capo> outfit;
     RecyclerView recyclerView;
-    Button btn_crea_outfit;
     Button btn_resetta_lista;
 
     @Override
@@ -47,43 +45,31 @@ public class CreazioneOutfitController extends AppCompatActivity implements Recy
         super.onCreate(savedInstanceState);
         setContentView(R.layout.creazione_outfit);
 
-        btn_resetta_lista = findViewById(R.id.btn_resetta_lista);
-
         recyclerView = findViewById(R.id.recycleListCreazione);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         db = FirebaseFirestore.getInstance();
         capoArrayList = new ArrayList<>();
-        outfit = new ArrayList<>();
         myAdapter = new AdapterCreazioneOutfit(CreazioneOutfitController.this, capoArrayList);
 
         recyclerView.setAdapter(myAdapter);
         EventChangeListener();
 
-        armadioService = new ArmadioService(new ArmadioDAO());
+        btn_resetta_lista = findViewById(R.id.btn_resetta_lista);
 
-        btn_crea_outfit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (int i = 0; i < outfit.size(); i++) {
-                    Log.d("INSERTTT", "Tipologia " + i + ": " + outfit.get(i).getTipologia() + "isScelto: " + outfit.get(i).getScelto());
-                }
-            }
-        });
+
+        armadioService = new ArmadioService(new ArmadioDAO());
 
         btn_resetta_lista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 armadioService.resettaSceltaCapi();
-                // Resetta anche 'outfit'
                 outfit.clear();
                 myAdapter.notifyDataSetChanged();
                 Log.d("INSERTTT", "Lista resettata");
             }
         });
-
-
     }
 
     private void EventChangeListener() {

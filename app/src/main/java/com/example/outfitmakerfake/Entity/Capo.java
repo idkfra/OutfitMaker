@@ -1,11 +1,12 @@
 package com.example.outfitmakerfake.Entity;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.List;
 
-public class Capo {
+public class Capo implements Parcelable {
     private String id_indumento;
     private String id_armadio;
     private String nome_brand;
@@ -64,6 +65,31 @@ public class Capo {
         this.occasione = occasione;
         this.immagine = immagine;
     }
+
+    protected Capo(Parcel in) {
+        id_indumento = in.readString();
+        id_armadio = in.readString();
+        nome_brand = in.readString();
+        colori = in.createStringArrayList();
+        tipologia = in.readString();
+        stagionalita = in.readString();
+        occasione = in.readString();
+        immagine = in.readParcelable(Bitmap.class.getClassLoader());
+        byte tmpIsScelto = in.readByte();
+        isScelto = tmpIsScelto == 1;
+    }
+
+    public static final Creator<Capo> CREATOR = new Creator<Capo>() {
+        @Override
+        public Capo createFromParcel(Parcel in) {
+            return new Capo(in);
+        }
+
+        @Override
+        public Capo[] newArray(int size) {
+            return new Capo[size];
+        }
+    };
 
     public String getId_indumento() {
         return id_indumento;
@@ -135,5 +161,23 @@ public class Capo {
 
     public void setImmagine(Bitmap immagine) {
         this.immagine = immagine;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id_indumento);
+        dest.writeString(id_armadio);
+        dest.writeString(nome_brand);
+        dest.writeStringList(colori);
+        dest.writeString(tipologia);
+        dest.writeString(stagionalita);
+        dest.writeString(occasione);
+        dest.writeParcelable(immagine, flags);
+        dest.writeByte((byte) (isScelto ? 1 : 0));
     }
 }

@@ -16,18 +16,19 @@
         android:theme="@style/Theme.OutfitMakerFake"
         tools:targetApi="31">
         <activity
-            android:name=".Utility.Utente.LoginController"
+            android:name=".Utente.LoginController"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Utility.Utente.RegistrazioneController" />
+        <activity android:name=".Utente.RegistrazioneController" />
         <activity android:name=".Home" />
-        <activity android:name=".Utility.AreaUtente.AreaUtenteController"/>
-        <activity android:name=".Utility.Armadio.ArmadioController"/>
-        <activity android:name=".Utility.CreazioneOutfit.CreazioneOutfitController"/>
+        <activity android:name=".AreaUtente.AreaUtenteController"/>
+        <activity android:name=".Armadio.ArmadioController"/>
+        <activity android:name=".CreazioneOutfit.CreazioneOutfitController"/>
+        <activity android:name=".CreazioneOutfit.OutfitCreato"/>
     </application>
 
 </manifest>

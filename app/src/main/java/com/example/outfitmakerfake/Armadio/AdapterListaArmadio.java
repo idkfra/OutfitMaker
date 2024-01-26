@@ -1,4 +1,4 @@
-package com.example.outfitmakerfake.Utility.Armadio;
+package com.example.outfitmakerfake.Armadio;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -146,7 +146,6 @@ public class AdapterListaArmadio extends RecyclerView.Adapter<AdapterListaArmadi
                 dialog.show();
             }
         });
-
     }
 
     @Override

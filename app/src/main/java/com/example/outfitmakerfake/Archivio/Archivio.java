@@ -2,9 +2,13 @@ package com.example.outfitmakerfake.Archivio;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,11 +32,16 @@ public class Archivio extends AppCompatActivity {
     FirebaseFirestore db;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser currentUser = mAuth.getCurrentUser();
+    FragmentManager fm;
+    FrameLayout frammento_vedi_outfit;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.archivio);
+
+        fm = getSupportFragmentManager();
+        frammento_vedi_outfit = findViewById(R.id.contenitore_frammento_vedi_outfit);
         recyclerView = findViewById(R.id.recycleList_archivio);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

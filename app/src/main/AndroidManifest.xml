@@ -30,6 +30,7 @@
         <activity android:name=".CreazioneOutfit.CreazioneOutfitController"/>
         <activity android:name=".CreazioneOutfit.OutfitCreato"/>
         <activity android:name=".Archivio.Archivio"/>
+        <activity android:name=".Archivio.OutfitUtente"/>
     </application>
 
 </manifest>

@@ -166,7 +166,7 @@ public class AdapterCreazioneOutfit extends RecyclerView.Adapter<AdapterCreazion
 
                 if(somma_shirt<=1 && somma_felpe<=1 && somma_maglia_lunga<=1 && somma_camicia<=1 && somma_giacca<=1 && somma_cappotto<=1 && somma_jeans<=1
                         && somma_pantalone<=1 && somma_gonna<=1 && somma_vestito_corto<=1 && somma_vestito_lungo<=1 && somma_scarpe<=1){
-                    armadioService.creaOutfit(outfit).addOnCompleteListener(new OnCompleteListener<Boolean>() {
+                   /* armadioService.creaOutfit(outfit).addOnCompleteListener(new OnCompleteListener<Boolean>() {
                         @Override
                         public void onComplete(@androidx.annotation.NonNull Task<Boolean> task) {
                             if(task.isSuccessful()){
@@ -189,7 +189,10 @@ public class AdapterCreazioneOutfit extends RecyclerView.Adapter<AdapterCreazion
                                 Toast.makeText(v.getContext(), "Errore: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
-                    });
+                    });*/
+                    Intent i = new Intent(context, OutfitCreato.class);
+                    i.putParcelableArrayListExtra("outfit", outfit);
+                    context.startActivity(i);
                 } else {
                     Toast.makeText(v.getContext(), "Numero di capi errato", Toast.LENGTH_SHORT).show();
                     return;

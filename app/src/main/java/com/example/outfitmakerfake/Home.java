@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.outfitmakerfake.Archivio.Archivio;
 import com.example.outfitmakerfake.AreaUtente.AreaUtenteController;
 import com.example.outfitmakerfake.Armadio.ArmadioController;
 import com.example.outfitmakerfake.CreazioneOutfit.CreazioneOutfitController;
@@ -47,6 +48,11 @@ public class Home extends AppCompatActivity {
 
     public void armadioClicked(View v){
         Intent i = new Intent(getApplicationContext(), ArmadioController.class);
+        startActivity(i);
+    }
+
+    public void archivioClicked(View v){
+        Intent i = new Intent(getApplicationContext(), Archivio.class);
         startActivity(i);
     }
 

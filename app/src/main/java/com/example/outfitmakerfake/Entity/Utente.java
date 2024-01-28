@@ -9,11 +9,12 @@ public class Utente {
     private String password;
     private String telefono;
     private String idArmadio;
+    private String idArchivio;
 
     public Utente() {
     }
 
-    public Utente(String id, String nome, String cognome, String email, String password, String telefono, String idArmadio) {
+    public Utente(String id, String nome, String cognome, String email, String password, String telefono, String idArmadio, String idArchivio) {
         this.id = id;
         this.nome = nome;
         this.cognome = cognome;
@@ -21,6 +22,7 @@ public class Utente {
         this.password = password;
         this.telefono = telefono;
         this.idArmadio = idArmadio;
+        this.idArchivio = idArchivio;
     }
 
     public String getId() {

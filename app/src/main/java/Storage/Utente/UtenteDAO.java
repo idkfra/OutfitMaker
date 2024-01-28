@@ -19,6 +19,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.HashMap;
 import java.util.Map;
 
+import Storage.Archivio.ArchivioDAO;
+import Storage.Archivio.ArchivioService;
 import Storage.Armadio.ArmadioDAO;
 
 public class UtenteDAO {
@@ -27,7 +29,9 @@ public class UtenteDAO {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     public Utente utente;
     String idArmadio;
+    String idArchivio;
     public ArmadioDAO armadioDAO = new ArmadioDAO(mAuth, db);
+    public ArchivioService archivioService = new ArchivioService(new ArchivioDAO());
     public UtenteDAO() {
     }
 
@@ -53,10 +57,10 @@ public class UtenteDAO {
                                 String uid = currentUser.getUid();
 
                                 idArmadio = armadioDAO.generateUniqueArmadioId();
+                                idArchivio = archivioService.generateUniqueArchivioId();
 
-                                Log.d("UTENTE", "UID in creaUtenteFirestore: " + uid);
-                                creaUtenteFirestore(uid, nome, cognome, email, password, telefono, idArmadio);
-                                utente = new Utente(uid, nome, cognome, email, password, telefono, idArmadio);
+                                creaUtenteFirestore(uid, nome, cognome, email, password, telefono, idArmadio, idArchivio);
+                                utente = new Utente(uid, nome, cognome, email, password, telefono, idArmadio, idArchivio);
                                 taskCompletionSource.setResult(true);
                             } else {
                                 Log.d("UTENTE", "Errore: currentUser è null");
@@ -74,7 +78,7 @@ public class UtenteDAO {
         return taskCompletionSource.getTask();
     }
 
-    public void creaUtenteFirestore(String uid, String nome, String cognome, String email, String password, String telefono, String idArmadio) {
+    public void creaUtenteFirestore(String uid, String nome, String cognome, String email, String password, String telefono, String idArmadio, String idArchivio) {
 
         //armadioDAO=new ArmadioDAO();
         Log.d("UTENTE", "Entra in creaUtenteFirestore");
@@ -85,7 +89,8 @@ public class UtenteDAO {
         utente.put("email", email);
         utente.put("password", password);
         utente.put("telefono", telefono);
-        utente.put("idArmadio", idArmadio);  // Aggiorna con il nuovo campo
+        utente.put("idArmadio", idArmadio);
+        utente.put("idArchivio", idArchivio);// Aggiorna con il nuovo campo
 
         db.collection("utenti")
                 .add(utente)
@@ -94,6 +99,7 @@ public class UtenteDAO {
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d("UTENTE", "Armadio creato con ID: " + documentReference.getId());
                         armadioDAO.creaArmadioFirestore(idArmadio);
+                        archivioService.creaArchivioFirestore(idArchivio, uid);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

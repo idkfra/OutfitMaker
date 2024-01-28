@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.outfitmakerfake.Entity.Capo;
 import com.example.outfitmakerfake.R;
-import com.example.outfitmakerfake.RecycleViewCreazioneInterface;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
@@ -28,7 +27,7 @@ import java.util.ArrayList;
 import Storage.Armadio.ArmadioDAO;
 import Storage.Armadio.ArmadioService;
 
-public class CreazioneOutfitController extends AppCompatActivity implements RecycleViewCreazioneInterface {
+public class CreazioneOutfitController extends AppCompatActivity {
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseFirestore db;
@@ -97,10 +96,5 @@ public class CreazioneOutfitController extends AppCompatActivity implements Recy
                         }
                     }
                 });
-    }
-
-    @Override
-    public void aggiungiCapoClicked(int position) {
-        Toast.makeText(this, "Click position: " + position, Toast.LENGTH_SHORT).show();
     }
 }

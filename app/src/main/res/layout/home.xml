@@ -45,7 +45,8 @@
         <Button
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="Archivio"/>
+            android:text="Archivio"
+            android:onClick="archivioClicked"/>
     </LinearLayout>
 
     <LinearLayout
@@ -58,10 +59,9 @@
             android:id="@+id/nome_cognome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="..."
+            android:text=""
             android:textStyle="bold"
             android:textSize="20dp"
             android:textColor="@color/black"/>
-
     </LinearLayout>
 </RelativeLayout>

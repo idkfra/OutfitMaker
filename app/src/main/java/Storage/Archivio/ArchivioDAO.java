@@ -2,6 +2,7 @@ package Storage.Archivio;
 
 import android.util.Log;
 
+import com.example.outfitmakerfake.Entity.Capo;
 import com.example.outfitmakerfake.Entity.Outfit;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

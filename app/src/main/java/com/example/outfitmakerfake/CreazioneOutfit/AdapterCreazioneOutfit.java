@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.outfitmakerfake.Entity.Capo;
 import com.example.outfitmakerfake.R;
+import com.example.outfitmakerfake.Utility.NetworkUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -102,6 +103,12 @@ public class AdapterCreazioneOutfit extends RecyclerView.Adapter<AdapterCreazion
         supportCreazione.btn_inserisci_capo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (!NetworkUtil.isNetworkAvailable(v.getContext())) {
+                    Toast.makeText(v.getContext(), "Connessione Internet assente", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 int clickedPosition = supportCreazione.getAdapterPosition();
                 if (clickedPosition != RecyclerView.NO_POSITION) {
                     Capo capo = capoArrayList.get(clickedPosition);

@@ -15,6 +15,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -22,10 +23,13 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 public class ArmadioDAO {
 
@@ -327,23 +331,273 @@ public class ArmadioDAO {
                            taskCompletionSource.setResult(false);
                        }
                    });
-
-            /*Map<String, Object> outfit_archivio = new HashMap<>();
-           outfit_archivio.put("id_archivio", idArchivio);
-           outfit_archivio.put("lista_capi", lista_capi);
-
-           db.collection("archivio")
-                    .document(idArchivio)
-                    .set(outfit_archivio)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            taskCompletionSource.setResult(true);
-                        } else {
-                            Log.d("INSERTTT", "Errore durante l'aggiunta del capo al documento: " + task.getException());
-                            taskCompletionSource.setResult(false);
-                        }
-                    });*/
         }
+
+        return taskCompletionSource.getTask();
+    }
+
+    public Task<Boolean> capiMinimiTop(String uid){
+        Query shirt_felpa_query = db.collection("capi")
+                .whereEqualTo("uid", uid)
+                .whereIn("tipologia", Arrays.asList("T-shirt", "Felpa"))
+                .limit(1);
+
+        Task<QuerySnapshot> tShirtFelpaTask = shirt_felpa_query.get();
+
+        return tShirtFelpaTask.continueWith(task -> {
+            if (task.isSuccessful()) {
+                QuerySnapshot tShirtFelpaSnapshot = task.getResult();
+                return tShirtFelpaSnapshot != null && !tShirtFelpaSnapshot.isEmpty();
+            } else {
+                // Errore nella query
+                Exception e = task.getException();
+                if (e != null) {
+                    // Gestisci l'errore qui
+                }
+                return false;
+            }
+        });
+    }
+
+    public Task<Boolean> capiMinimiCenter(String uid){
+        Query shirt_felpa_query = db.collection("capi")
+                .whereEqualTo("uid", uid)
+                .whereIn("tipologia", Arrays.asList("Pantalone", "Jeans", "Gonna", "Pantalone corto"))
+                .limit(1);
+
+        Task<QuerySnapshot> tShirtFelpaTask = shirt_felpa_query.get();
+
+        return tShirtFelpaTask.continueWith(task -> {
+            if (task.isSuccessful()) {
+                QuerySnapshot tShirtFelpaSnapshot = task.getResult();
+                return tShirtFelpaSnapshot != null && !tShirtFelpaSnapshot.isEmpty();
+            } else {
+                // Errore nella query
+                Exception e = task.getException();
+                if (e != null) {
+                    // Gestisci l'errore qui
+                }
+                return false;
+            }
+        });
+    }
+
+    public Task<Boolean> capiMinimiBottom(String uid){
+        Query shirt_felpa_query = db.collection("capi")
+                .whereEqualTo("uid", uid)
+                .whereIn("tipologia", Arrays.asList("Scarpe"))
+                .limit(1);
+
+        Task<QuerySnapshot> tShirtFelpaTask = shirt_felpa_query.get();
+
+        return tShirtFelpaTask.continueWith(task -> {
+            if (task.isSuccessful()) {
+                QuerySnapshot tShirtFelpaSnapshot = task.getResult();
+                return tShirtFelpaSnapshot != null && !tShirtFelpaSnapshot.isEmpty();
+            } else {
+                // Errore nella query
+                Exception e = task.getException();
+                if (e != null) {
+                    // Gestisci l'errore qui
+                }
+                return false;
+            }
+        });
+    }
+
+    public Task<ArrayList<Capo>> generaOutfit(String stagionalita) {
+        ArrayList<Capo> lista_capi = new ArrayList<>();
+
+        ArrayList<Capo> buffer_top = new ArrayList<>();
+        ArrayList<Capo> buffer_center = new ArrayList<>();
+        ArrayList<Capo> buffer_bottom = new ArrayList<>();
+
+        String uid = FirebaseAuth.getInstance().getUid();
+
+        TaskCompletionSource<ArrayList<Capo>> taskCompletionSource = new TaskCompletionSource<>();
+
+        // T-SHIRT
+        Query query_shirt = db.collection("capi")
+                .whereEqualTo("uid", uid)
+                .whereEqualTo("stagionalita", stagionalita)
+                .whereEqualTo("tipologia", "T-shirt");
+        Task<QuerySnapshot> task_shirt = query_shirt.get();
+        task_shirt.addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Capo capo = document.toObject(Capo.class);
+                    buffer_top.add(capo);
+                }
+            } else {
+                Log.d("GENERATE_OUTFIT", "Error getting documents: ", task.getException());
+            }
+        });
+
+        // FELPE
+        Query query_felpa = db.collection("capi")
+                .whereEqualTo("uid", uid)
+                .whereEqualTo("stagionalita", stagionalita)
+                .whereEqualTo("tipologia", "Felpa");
+        Task<QuerySnapshot> task_felpa = query_felpa.get();
+        task_felpa.addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Capo capo = document.toObject(Capo.class);
+                    buffer_top.add(capo);
+                }
+            } else {
+                Log.d("GENERATE_OUTFIT", "Error getting documents: ", task.getException());
+            }
+        });
+
+        // CAMICIA
+        Query query_camicia = db.collection("capi")
+                .whereEqualTo("uid", uid)
+                .whereEqualTo("stagionalita", stagionalita)
+                .whereEqualTo("tipologia", "Camicia");
+        Task<QuerySnapshot> task_camicia = query_camicia.get();
+        task_camicia.addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Capo capo = document.toObject(Capo.class);
+                    buffer_top.add(capo);
+                }
+            } else {
+                Log.d("GENERATE_OUTFIT", "Error getting documents: ", task.getException());
+            }
+        });
+
+        // MAGLIA LUNGA
+        Query query_maglia_lunga = db.collection("capi")
+                .whereEqualTo("uid", uid)
+                .whereEqualTo("stagionalita", stagionalita)
+                .whereEqualTo("tipologia", "Maglia lunga");
+        Task<QuerySnapshot> task_maglia_lunga = query_maglia_lunga.get();
+        task_maglia_lunga.addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Capo capo = document.toObject(Capo.class);
+                    buffer_top.add(capo);
+                }
+            } else {
+                Log.d("GENERATE_OUTFIT", "Error getting documents: ", task.getException());
+            }
+        });
+
+        // CENTER
+        // JEANS
+        Query query_jeans = db.collection("capi")
+                .whereEqualTo("uid", uid)
+                .whereEqualTo("stagionalita", stagionalita)
+                .whereEqualTo("tipologia", "Jeans");
+        Task<QuerySnapshot> task_jeans = query_jeans.get();
+        task_jeans.addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Capo capo = document.toObject(Capo.class);
+                    buffer_center.add(capo);
+                }
+            } else {
+                Log.d("GENERATE_OUTFIT", "Error getting documents: ", task.getException());
+            }
+        });
+
+        // PANTALONE
+        Query query_pantalone = db.collection("capi")
+                .whereEqualTo("uid", uid)
+                .whereEqualTo("stagionalita", stagionalita)
+                .whereEqualTo("tipologia", "Pantalone");
+        Task<QuerySnapshot> task_pantalone = query_pantalone.get();
+        task_pantalone.addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Capo capo = document.toObject(Capo.class);
+                    buffer_center.add(capo);
+                }
+            } else {
+                Log.d("GENERATE_OUTFIT", "Error getting documents: ", task.getException());
+            }
+        });
+
+        //PANTALONE CORTO
+        Query query_pantalone_corto = db.collection("capi")
+                .whereEqualTo("uid", uid)
+                .whereEqualTo("stagionalita", stagionalita)
+                .whereEqualTo("tipologia", "Pantalone corto");
+        Task<QuerySnapshot> task_pantalone_corto = query_pantalone_corto.get();
+        task_pantalone_corto.addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Capo capo = document.toObject(Capo.class);
+                    buffer_center.add(capo);
+                }
+            } else {
+                Log.d("GENERATE_OUTFIT", "Error getting documents: ", task.getException());
+            }
+        });
+
+        //GONNA
+        Query query_gonna = db.collection("capi")
+                .whereEqualTo("uid", uid)
+                .whereEqualTo("stagionalita", stagionalita)
+                .whereEqualTo("tipologia", "Gonna");
+        Task<QuerySnapshot> task_gonna = query_gonna.get();
+        task_gonna.addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Capo capo = document.toObject(Capo.class);
+                    buffer_center.add(capo);
+                }
+            } else {
+                Log.d("GENERATE_OUTFIT", "Error getting documents: ", task.getException());
+            }
+        });
+
+        //SCARPE
+        Query query_scarpe = db.collection("capi")
+                .whereEqualTo("uid", uid)
+                .whereEqualTo("stagionalita", stagionalita)
+                .whereEqualTo("tipologia", "Scarpe");
+        Task<QuerySnapshot> task_scarpe = query_scarpe.get();
+        task_scarpe.addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Capo capo = document.toObject(Capo.class);
+                    buffer_bottom.add(capo);
+                }
+            } else {
+                Log.d("GENERATE_OUTFIT", "Error getting documents: ", task.getException());
+            }
+        });
+
+
+        Tasks.whenAllComplete(task_shirt, task_felpa, task_camicia, task_maglia_lunga, task_jeans, task_pantalone, task_pantalone_corto, task_gonna)
+                .addOnCompleteListener(allTasks -> {
+                    if (allTasks.isSuccessful()) {
+                        if (!buffer_top.isEmpty() && !buffer_center.isEmpty() && !buffer_bottom.isEmpty()) {
+                            Random random = new Random();
+
+                            int capoRandomTopPosition = random.nextInt(buffer_top.size());
+                            Capo capoTopCasuale = buffer_top.get(capoRandomTopPosition);
+
+                            int capoRandomCenterPosition = random.nextInt(buffer_center.size());
+                            Capo capoCenterCasuale = buffer_center.get(capoRandomCenterPosition);
+
+                            int capoRandomBottomPosition = random.nextInt(buffer_bottom.size());
+                            Capo capoBottomCasuale = buffer_bottom.get(capoRandomBottomPosition);
+
+                            lista_capi.add(capoTopCasuale);
+                            lista_capi.add(capoCenterCasuale);
+                            lista_capi.add(capoBottomCasuale);
+                            taskCompletionSource.setResult(lista_capi);
+                        } else {
+                            taskCompletionSource.setResult(new ArrayList<>());
+                        }
+                    } else {
+                        Log.d("GENNN", "Error in Tasks.whenAllComplete: " + allTasks.getException());
+                        taskCompletionSource.setResult(new ArrayList<>());
+                    }
+                });
 
         return taskCompletionSource.getTask();
     }

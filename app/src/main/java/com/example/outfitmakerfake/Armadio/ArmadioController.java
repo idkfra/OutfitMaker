@@ -22,6 +22,7 @@ import com.example.outfitmakerfake.Entity.Capo;
 import com.example.outfitmakerfake.R;
 import com.example.outfitmakerfake.AreaUtente.AreaUtenteController;
 import com.example.outfitmakerfake.Filtri.FragmentFiltri;
+import com.example.outfitmakerfake.Utility.NetworkUtil;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
@@ -51,6 +52,11 @@ public class ArmadioController extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.armadio);
+
+        if (!NetworkUtil.isNetworkAvailable(getApplicationContext())) {
+            Toast.makeText(getApplicationContext(), "Connessione Internet assente", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         btn_frammento_modifica_capo = findViewById(R.id.btn_modifica_capo);
         frammento_modifica_capo = findViewById(R.id.contenitore_frammento_modifica_capo_armadio);
@@ -121,7 +127,6 @@ public class ArmadioController extends AppCompatActivity {
         FragmentModificaCapo mc = new FragmentModificaCapo();
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(R.id.contenitore_frammento_modifica_capo_armadio, mc, "ModificaCapo");
-        ft.addToBackStack(null);
         ft.commit();
     }
 
@@ -141,7 +146,6 @@ public class ArmadioController extends AppCompatActivity {
         FragmentFiltri ff = new FragmentFiltri();
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(R.id.contenitore_frammento_filtri, ff, "RicercaFiltri");
-        ft.addToBackStack(null);
         ft.commit();
     }
 

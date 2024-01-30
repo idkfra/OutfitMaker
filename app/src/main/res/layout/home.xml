@@ -28,7 +28,8 @@
         <Button
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="Generazione outfit"/>
+            android:text="Generazione outfit"
+            android:onClick="generazioneCliked"/>
 
         <Button
             android:layout_width="300dp"

@@ -23,14 +23,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Utente.RegistrazioneController" />
-        <activity android:name=".Home" />
+        <activity android:name=".Utente.RegistrazioneController"/>
+        <activity android:name=".Home"/>
         <activity android:name=".AreaUtente.AreaUtenteController"/>
         <activity android:name=".Armadio.ArmadioController"/>
         <activity android:name=".CreazioneOutfit.CreazioneOutfitController"/>
         <activity android:name=".CreazioneOutfit.OutfitCreato"/>
         <activity android:name=".Archivio.Archivio"/>
         <activity android:name=".Archivio.OutfitUtente"/>
+        <activity android:name=".GenerazioneOutfit.GenerazioneOutfit"/>
+        <activity android:name=".GenerazioneOutfit.OutfitGenerato"/>
     </application>
 
 </manifest>

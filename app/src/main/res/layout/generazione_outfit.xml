@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/yellow">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Generazione Outfit"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="40dp"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Colore:"
+            android:textSize="20dp"
+            android:textColor="@color/black"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioGroup
+                android:id="@+id/radioGroupColore_Gen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rosso"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Verde"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Blu"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Giallo"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Arancione"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rosa"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Viola"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nero"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bianco"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Grigio"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Marrone"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Beige"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+            </RadioGroup>
+        </HorizontalScrollView>
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stagionalità:"
+            android:textSize="20dp"
+            android:textColor="@color/black"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioGroup
+                android:id="@+id/radioGroupStagionalita_Gen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Estivo"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Invernale"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Primaverile"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Autunnale"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+            </RadioGroup>
+        </HorizontalScrollView>
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Occasione:"
+            android:textSize="20dp"
+            android:textColor="@color/black"/>
+
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioGroup
+                android:id="@+id/radioGroupOccasione_Gen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Elegante"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sportivo"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Casual"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Streetwear"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+            </RadioGroup>
+        </HorizontalScrollView>
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tipologia:"
+            android:textSize="20dp"
+            android:textColor="@color/black"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioGroup
+                android:id="@+id/radioGroupTipologia_Gen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="T-shirt"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Maglia lunga"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Felpa"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Camicia"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Giacca"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cappotto"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jeans"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pantalone"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pantalone corto"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gonna"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Vestito lungo"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Vestito corto"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Scarpe"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"/>
+            </RadioGroup>
+        </HorizontalScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar_generazione_outfit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/btn_genera_outfit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Genera Outfit"/>
+</LinearLayout>

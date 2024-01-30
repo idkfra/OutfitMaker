@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.outfitmakerfake.Home;
 import com.example.outfitmakerfake.Utente.LoginController;
 import com.example.outfitmakerfake.R;
+import com.example.outfitmakerfake.Utility.NetworkUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,6 +43,11 @@ public class AreaUtenteController extends AppCompatActivity {
         Log.d("AREAUTENTELOG", "onCreate AreaUtente");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.area_utente);
+
+        if (!NetworkUtil.isNetworkAvailable(getApplicationContext())) {
+            Toast.makeText(getApplicationContext(), "Connessione Internet assente", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         frammento_modifica_utente = findViewById(R.id.contenitoreModificaDati);
 

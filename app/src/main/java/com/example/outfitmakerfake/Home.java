@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +14,7 @@ import com.example.outfitmakerfake.Archivio.Archivio;
 import com.example.outfitmakerfake.AreaUtente.AreaUtenteController;
 import com.example.outfitmakerfake.Armadio.ArmadioController;
 import com.example.outfitmakerfake.CreazioneOutfit.CreazioneOutfitController;
+import com.example.outfitmakerfake.GenerazioneOutfit.GenerazioneOutfit;
 import com.example.outfitmakerfake.Utente.LoginController;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,13 +43,21 @@ public class Home extends AppCompatActivity {
         }
     }
 
+    public void generazioneCliked(View v){
+        Intent i = new Intent(getApplicationContext(), GenerazioneOutfit.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(i);
+    }
+
     public void creazioneClicked(View v){
         Intent i = new Intent(getApplicationContext(), CreazioneOutfitController.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(i);
     }
 
     public void armadioClicked(View v){
         Intent i = new Intent(getApplicationContext(), ArmadioController.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(i);
     }
 

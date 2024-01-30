@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.outfitmakerfake.Entity.Capo;
 import com.example.outfitmakerfake.R;
+import com.example.outfitmakerfake.Utility.NetworkUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -85,6 +86,12 @@ public class FragmentFiltri extends Fragment {
         btn_ricerca_filtri.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (!NetworkUtil.isNetworkAvailable(getContext())) {
+                    Toast.makeText(getContext(), "Connessione Internet assente", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 //Prendo il valore dei colori
                 int childCount = gridLayout.getChildCount();
                 ArrayList<String> coloriSelezionati = new ArrayList<>();

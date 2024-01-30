@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.outfitmakerfake.Home;
 import com.example.outfitmakerfake.R;
+import com.example.outfitmakerfake.Utility.NetworkUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,6 +61,12 @@ public class LoginController extends AppCompatActivity {
     }
 
     public void inserisciDatiLog(View v){
+
+        if (!NetworkUtil.isNetworkAvailable(getApplicationContext())) {
+            Toast.makeText(getApplicationContext(), "Connessione Internet assente", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         progressBar.setVisibility(View.VISIBLE);
         email = emailET.getText().toString();
         password = passwordET.getText().toString();

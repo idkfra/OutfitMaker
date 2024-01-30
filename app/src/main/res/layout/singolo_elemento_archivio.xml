@@ -14,13 +14,26 @@
         android:textColor="@color/black"
         android:layout_centerVertical="true"/>
 
-    <ImageView
-        android:id="@+id/img_ingrandisci"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="20dp"
-        android:src="@drawable/ingrandire"
-        android:layout_centerVertical="true"/>
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginEnd="15dp">
 
+            <ImageView
+                android:id="@+id/img_ingrandisci"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ingrandire"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:id="@+id/img_remove_outfit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/removee"/>
+    </LinearLayout>
 </RelativeLayout>

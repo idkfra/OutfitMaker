@@ -1,6 +1,8 @@
 package com.example.outfitmakerfake.Archivio;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.Adapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
@@ -18,6 +21,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.outfitmakerfake.CreazioneOutfit.AdapterCreazioneOutfit;
 import com.example.outfitmakerfake.Entity.Outfit;
 import com.example.outfitmakerfake.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -50,7 +55,7 @@ public class AdapterArchivio extends RecyclerView.Adapter<AdapterArchivio.Suppor
     public void onBindViewHolder(AdapterArchivio.@org.checkerframework.checker.nullness.qual.NonNull SupportA holder, int position) {
         String uid = auth.getCurrentUser().getUid();
         Outfit outfit = outfitArrayList.get(position);
-        holder.id_outfit.setText("Outfit " + (position + 1));
+        holder.id_outfit.setText("Outfit");
 
         holder.img_ingrandisci.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +66,24 @@ public class AdapterArchivio extends RecyclerView.Adapter<AdapterArchivio.Suppor
                 context.startActivity(i);
             }
         });
+
+        /*holder.img_remove_outfit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Conferma eliminazione");
+                builder.setMessage("Sei sicuro di voler eliminare questo outfit?");
+
+                builder.setPositiveButton("Elimina", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        int currentPosition
+                    }
+                });
+
+
+            }
+        });*/
     }
 
     @Override
@@ -72,7 +95,7 @@ public class AdapterArchivio extends RecyclerView.Adapter<AdapterArchivio.Suppor
         FrameLayout frammento_vedi_outfit;
 
         TextView id_outfit;
-        ImageView img_ingrandisci;
+        ImageView img_ingrandisci, img_remove_outfit;
 
         public SupportA(@NonNull View itemView) {
             super(itemView);
@@ -80,6 +103,7 @@ public class AdapterArchivio extends RecyclerView.Adapter<AdapterArchivio.Suppor
             frammento_vedi_outfit = itemView.findViewById(R.id.contenitore_frammento_vedi_outfit);
             id_outfit = itemView.findViewById(R.id.id_outfit_archivio);
             img_ingrandisci = itemView.findViewById(R.id.img_ingrandisci);
+            img_remove_outfit = itemView.findViewById(R.id.img_remove_outfit);
         }
     }
 }

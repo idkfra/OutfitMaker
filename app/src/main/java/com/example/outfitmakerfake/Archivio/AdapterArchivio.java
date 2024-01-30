@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +20,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.outfitmakerfake.CreazioneOutfit.AdapterCreazioneOutfit;
+import com.example.outfitmakerfake.Entity.Capo;
 import com.example.outfitmakerfake.Entity.Outfit;
 import com.example.outfitmakerfake.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -55,7 +59,12 @@ public class AdapterArchivio extends RecyclerView.Adapter<AdapterArchivio.Suppor
     public void onBindViewHolder(AdapterArchivio.@org.checkerframework.checker.nullness.qual.NonNull SupportA holder, int position) {
         String uid = auth.getCurrentUser().getUid();
         Outfit outfit = outfitArrayList.get(position);
-        holder.id_outfit.setText("Outfit");
+        String tipologia_singolo_elenco = "";
+        for(Capo capo : outfit.getLista_capi()){
+            tipologia_singolo_elenco = tipologia_singolo_elenco + capo.getTipologia() + ", ";
+            holder.id_outfit.setText(tipologia_singolo_elenco);
+        }
+        //holder.id_outfit.setText("Outfit");
 
         holder.img_ingrandisci.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,23 +76,62 @@ public class AdapterArchivio extends RecyclerView.Adapter<AdapterArchivio.Suppor
             }
         });
 
-        /*holder.img_remove_outfit.setOnClickListener(new View.OnClickListener() {
+        holder.img_remove_outfit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Conferma eliminazione");
-                builder.setMessage("Sei sicuro di voler eliminare questo outfit?");
+                final int currentPosition = holder.getAdapterPosition();
+                if (currentPosition != RecyclerView.NO_POSITION) {
+                    Log.d("REMMM", "Size: " + outfitArrayList.size());
 
-                builder.setPositiveButton("Elimina", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        int currentPosition
-                    }
-                });
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Conferma eliminazione");
+                    builder.setMessage("Sei sicuro di voler eliminare questo outfit?");
 
+                    builder.setPositiveButton("Elimina", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String outfitIdToDelete = outfitArrayList.get(currentPosition).getId_outfit();
 
+                            db.collection("outfit")
+                                    .document(outfitIdToDelete)
+                                    .delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            if (currentPosition < outfitArrayList.size() &&
+                                                    outfitArrayList.get(currentPosition).getId_outfit().equals(outfitIdToDelete)) {
+                                                outfitArrayList.remove(currentPosition);
+                                                notifyItemRemoved(currentPosition);
+                                                Toast.makeText(context, "Outfit cancellato", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(context, "Outfit cancellato", Toast.LENGTH_SHORT);
+                                                Intent i = new Intent(context, Archivio.class);
+                                                i.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                                context.startActivity(i);
+                                            }
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(context, "Errore nell'eliminazione: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }
+                    });
+
+                    builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
             }
-        });*/
+        });
     }
 
     @Override

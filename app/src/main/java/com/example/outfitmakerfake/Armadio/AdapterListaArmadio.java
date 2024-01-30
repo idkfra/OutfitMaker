@@ -120,10 +120,9 @@ public class AdapterListaArmadio extends RecyclerView.Adapter<AdapterListaArmadi
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
+                                            Log.d("REMMM", "task: " + task.getResult());
                                             if (task.isSuccessful()) {
-                                                // Rimuove l'elemento dalla lista utilizzando la posizione corrente
                                                 capoArrayList.remove(currentPosition);
-                                                // Notifica all'Adapter che i dati sono stati modificati
                                                 notifyItemRemoved(currentPosition);
                                                 Toast.makeText(context, "Indumento cancellato", Toast.LENGTH_SHORT).show();
                                             } else {

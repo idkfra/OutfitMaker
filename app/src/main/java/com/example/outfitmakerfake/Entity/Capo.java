@@ -14,10 +14,21 @@ public class Capo implements Parcelable {
     private String tipologia;
     private String stagionalita;
     private String occasione;
-    private Bitmap immagine;
+    private String imageUri;
     private Boolean isScelto = true;
 
     public Capo() {
+    }
+
+    public Capo(String id_indumento, String id_armadio, String nome_brand, List<String> colori, String tipologia, String stagionalita, String occasione, String imageUri) {
+        this.id_indumento = id_indumento;
+        this.id_armadio = id_armadio;
+        this.nome_brand = nome_brand;
+        this.colori = colori;
+        this.tipologia = tipologia;
+        this.stagionalita = stagionalita;
+        this.occasione = occasione;
+        this.imageUri = imageUri;
     }
 
     public Capo(String nome_brand, List<String> colori, String tipologia, String stagionalita, String occasione, Boolean isScelto) {
@@ -56,7 +67,7 @@ public class Capo implements Parcelable {
         this.occasione = occasione;
     }
 
-    public Capo(String id_indumento, String nome_brand, List<String> colori, String tipologia, String stagionalita, String occasione, Bitmap immagine) {
+    /*public Capo(String id_indumento, String nome_brand, List<String> colori, String tipologia, String stagionalita, String occasione, Bitmap immagine) {
         this.id_indumento = id_indumento;
         this.nome_brand = nome_brand;
         this.colori = colori;
@@ -64,7 +75,7 @@ public class Capo implements Parcelable {
         this.stagionalita = stagionalita;
         this.occasione = occasione;
         this.immagine = immagine;
-    }
+    }*/
 
     protected Capo(Parcel in) {
         id_indumento = in.readString();
@@ -74,7 +85,7 @@ public class Capo implements Parcelable {
         tipologia = in.readString();
         stagionalita = in.readString();
         occasione = in.readString();
-        immagine = in.readParcelable(Bitmap.class.getClassLoader());
+        imageUri = in.readString();
         byte tmpIsScelto = in.readByte();
         isScelto = tmpIsScelto == 1;
     }
@@ -155,14 +166,6 @@ public class Capo implements Parcelable {
         isScelto = scelto;
     }
 
-    public Bitmap getImmagine() {
-        return immagine;
-    }
-
-    public void setImmagine(Bitmap immagine) {
-        this.immagine = immagine;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -177,7 +180,7 @@ public class Capo implements Parcelable {
         dest.writeString(tipologia);
         dest.writeString(stagionalita);
         dest.writeString(occasione);
-        dest.writeParcelable(immagine, flags);
+        dest.writeString(imageUri);
         dest.writeByte((byte) (isScelto ? 1 : 0));
     }
 }

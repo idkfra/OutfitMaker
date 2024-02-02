@@ -1,6 +1,10 @@
 package Storage.Armadio;
 
+import static java.security.AccessController.getContext;
+
+import android.graphics.Bitmap;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.outfitmakerfake.Entity.Capo;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,9 +22,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.io.ByteArrayOutputStream;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -124,8 +131,6 @@ public class ArmadioDAO {
         capoMap.put("occasione", occasione);
         capoMap.put("uid", uid);
         capoMap.put("isScelto", false);
-
-        // Nota: Non è possibile memorizzare direttamente un'immagine in Firestore, quindi potresti doverla salvare separatamente, ad esempio su Firebase Storage, e memorizzare solo il percorso o l'URL dell'immagine nel documento.
 
         db.collection("capi")
                 .document(idCapo)
@@ -339,7 +344,7 @@ public class ArmadioDAO {
     public Task<Boolean> capiMinimiTop(String uid){
         Query shirt_felpa_query = db.collection("capi")
                 .whereEqualTo("uid", uid)
-                .whereIn("tipologia", Arrays.asList("T-shirt", "Felpa"))
+                .whereIn("tipologia", Arrays.asList("T-shirt", "Felpa", "Camicia", "Maglia lunga"))
                 .limit(1);
 
         Task<QuerySnapshot> tShirtFelpaTask = shirt_felpa_query.get();
@@ -352,7 +357,7 @@ public class ArmadioDAO {
                 // Errore nella query
                 Exception e = task.getException();
                 if (e != null) {
-                    // Gestisci l'errore qui
+
                 }
                 return false;
             }

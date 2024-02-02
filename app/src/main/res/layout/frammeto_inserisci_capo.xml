@@ -23,10 +23,10 @@
             android:textStyle="bold"
             android:textSize="40dp"/>
 
-        <Button
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="return"
+            android:src="@drawable/indietro"
             android:onClick="rimuoviFrammentoClicked"/>
     </LinearLayout>
 
@@ -395,7 +395,7 @@
         android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Immagine"
+        android:text="Immagine:"
         android:textSize="20dp"
         android:textColor="@color/black"/>
 
@@ -429,7 +429,8 @@
             android:layout_marginLeft="50dp"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="@color/black"/>
+            android:background="@color/black"
+            android:layout_marginBottom="20dp"/>
 
     </LinearLayout>
     </LinearLayout>

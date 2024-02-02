@@ -107,7 +107,6 @@ public class ArmadioController extends AppCompatActivity {
         FragmentInserisciCapo ic = new FragmentInserisciCapo();
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(R.id.contenitoreFrammento, ic, "InserisciCapo");
-        ft.addToBackStack(null);
         ft.commit();
     }
 

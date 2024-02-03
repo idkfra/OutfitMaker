@@ -12,6 +12,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -134,5 +135,53 @@ public class UtenteDAO {
         }
         return null; // o gestisci questo caso in modo appropriato per il tuo scenario
     }
+
+    public Task<Boolean> isUtenteAdmin(){
+        final TaskCompletionSource taskCompletionSource= new TaskCompletionSource<>();
+
+        FirebaseUser currentUser=FirebaseAuth.getInstance().getCurrentUser();
+
+        if(currentUser!=null){
+            String uid= currentUser.getUid();
+
+            FirebaseFirestore.getInstance().collection("utenti")
+                    .whereEqualTo("uid", uid)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            if (task.getResult() != null && !task.getResult().isEmpty()) {
+                                // Dovrebbe esserci un solo documento, ma puoi gestire più risultati se necessario
+                                DocumentSnapshot document = task.getResult().getDocuments().get(0);
+
+                                // Ottieni il valore booleano dal campo "isAdmin"
+                                Boolean isAdmin = document.getBoolean("isAdmin");
+
+                                // Verifica se il valore è true o false
+                                if (isAdmin != null) {
+                                    Log.d("utenteadmin", "l'utente è un " + isAdmin);
+                                    taskCompletionSource.setResult(isAdmin);
+                                } else {
+                                    // Il campo "isAdmin" non è presente o è null, consideralo come false
+                                    Log.d("utenteadmin", "// Il campo \"isAdmin\" non è presente o è null, consideralo come false");
+                                    taskCompletionSource.setResult(false);
+                                }
+                            } else {
+                                Log.d("utenteadmin", "Nessun documento trovato");
+                                // Nessun documento trovato, considera come false
+                                taskCompletionSource.setResult(false);
+                            }
+                        } else {
+                            Log.d("utenteadmin", "altri errori a cazzo");
+                            // Gestisci l'errore durante il recupero del documento utente
+                            taskCompletionSource.setResult(false);
+                        }
+                    });
+        } else {
+            // L'utente non è autenticato, considera come false
+            taskCompletionSource.setResult(false);
+        }
+        return taskCompletionSource.getTask();
+    }
+
 
 }
